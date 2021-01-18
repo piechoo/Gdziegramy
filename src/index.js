@@ -1,8 +1,6 @@
 const express = require('express')
-const mysql = require('mysql2')
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const path = require('path');
+const session = require('express-session')
+const bodyParser = require('body-parser')
 const router = require("./router")
 const db = require("./model/database")
 
@@ -24,10 +22,6 @@ app.use(bodyParser.json());
 app.set("views", "views")
 app.set("view engine", "hbs")
 app.use("/",router)
-
-
-
-
 
 
 

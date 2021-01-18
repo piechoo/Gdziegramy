@@ -1,4 +1,3 @@
-//const db = require("../index")
 const db = require("../model/database")
 const User = require("../model/User")
 const Court = require("../model/Court")
@@ -12,6 +11,11 @@ exports.renderLoginPage = (req, res) => {
 exports.renderAddUser = (req, res) =>{
     res.render("adduser")
 }
+
+exports.renderAddCourt = (req, res) =>{
+    res.render("addcourt")
+}
+
 exports.AddUser = async (request, response) => {
     let username = request.body.username;
     let email = request.body.email;
@@ -31,6 +35,41 @@ exports.AddUser = async (request, response) => {
 
     response.redirect('/home');
     response.send('Incorrect Username and/or Password!');
+    response.end();
+
+}
+
+exports.AddCourt = async (request, response) => {
+    let city = request.body.city;
+    let street = request.body.street;
+    let number = request.body.number;
+    let sport = request.body.sport;
+    let point = { type: 'Point',
+        coordinates: [request.body.cords1,request.body.cords2],
+        crs: { type: 'name', properties: { name: 'EPSG:4326'}}
+    };
+    const points = {
+        type: 'Point',
+        coordinates: [39.807222,-76.984722],
+        crs: { type: 'name', properties: { name: 'EPSG:4326'} }
+    };
+
+    Adress.create({
+        number: number,
+        street: street,
+        city: city,
+        coordinates: point
+    })
+        .then( result => {
+            Court.create({
+                AdressID: result.AdressID,
+                sport: sport
+            })
+                .catch(err => console.log(err))
+        })
+        .then( response.redirect("/courts"))
+        .catch(err => console.log(err))
+
     response.end();
 
 }

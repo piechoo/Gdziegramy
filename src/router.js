@@ -11,6 +11,9 @@ router.get("/adresses",controller.getAdress)
 router.get("/adduser", controller.renderAddUser)
 router.post("/addeduser", controller.AddUser)
 
+router.get("/addcourt", controller.renderAddCourt)
+router.post("/addedcourt", controller.AddCourt)
+
 
 
 module.exports = router
