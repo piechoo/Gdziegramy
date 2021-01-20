@@ -37,21 +37,23 @@
 </head>
 <body>
 <div class="login-form">
-    <h1>Dodaj nowe boisko</h1>
-    <form action="addedcourt" method="POST">
-        <input type="text" name="city" placeholder="Miasto" required>
-        <input type="text" name="street" placeholder="Ulica" required>
-        <input type="number" name="number" placeholder="Nr ulicy" required>
-        <input type="number" step="any" name="cords1" placeholder="Koordynaty 1" required>
-        <input type="number" step="any" name="cords2" placeholder="Koordynaty 2" required>
-        <select id="sport" name="sport" required>
-            <option value="Football">Football</option>
-            <option value="Basketball">Basketball</option>
-            <option value="Volayball">Voleyball</option>
-            <option value="Tennis">Tennis</option>
+    <h1>Dodaj nowe wydarzenie</h1>
+    <form action="addedevent" method="POST">
+        <input type="text" name="name" placeholder="Nazwa wydarzenia" required>
+        <label for="level">Wybierz poziom :</label>
+        <input type="number" min="1" max="5" name="level" placeholder="Poziom" required><br>
+        <label for="starttime">Wybierz czas rozpoczęcia :</label>
+        <input type="datetime-local" id="sterttime" name="starttime"><br>
+        <label for="endtime">Wybierz czas zakończenia:</label>
+        <input type="datetime-local" id="endtime" name="endtime"><br>
+        <select id="court" name="court" required>
+            {{#each korty}}
+                <option value= {{this.CourtID}}>{{this.adress.city}} {{this.adress.street}} {{this.adress.number}} {{this.sport.name}}</option>
+            {{/each}}
         </select>
         <input type="submit">
     </form>
+
 </div>
 </body>
 </html>

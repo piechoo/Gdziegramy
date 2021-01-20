@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("./database");
+const Sport = require("../model/Sport")
 
 const Event = db.define('events',{
     EventID: {
@@ -26,7 +27,12 @@ const Event = db.define('events',{
     UserID:{
         type: Sequelize.INTEGER,
         foreignKey: true
-    }
+    },
+    SportID:{
+        type: Sequelize.INTEGER,
+        foreignKey: true
+    },
 })
 
+Event.belongsTo(Sport, {foreignKey: 'SportID'});
 module.exports = Event;

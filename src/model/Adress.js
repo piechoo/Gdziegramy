@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("./database");
+const Court = require("../model/Court")
 
 const Adress = db.define('adresses', {
         AdressID: {

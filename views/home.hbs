@@ -37,21 +37,10 @@
 </head>
 <body>
 <div class="login-form">
-    <h1>Dodaj nowe boisko</h1>
-    <form action="addedcourt" method="POST">
-        <input type="text" name="city" placeholder="Miasto" required>
-        <input type="text" name="street" placeholder="Ulica" required>
-        <input type="number" name="number" placeholder="Nr ulicy" required>
-        <input type="number" step="any" name="cords1" placeholder="Koordynaty 1" required>
-        <input type="number" step="any" name="cords2" placeholder="Koordynaty 2" required>
-        <select id="sport" name="sport" required>
-            <option value="1">Football</option>
-            <option value="2">Basketball</option>
-            <option value="3">Voleyball</option>
-            <option value="4">Tennis</option>
-        </select>
-        <input type="submit">
-    </form>
+    <h1>Witaj {{user}}</h1>
+    <a href="/addevent"> Dodaj wydarzenie</a>
+    <a href="/addcourt"> Dodaj boisko</a>
+    <a href="/logout"> Wyloguj się</a>
 </div>
 </body>
 </html>
