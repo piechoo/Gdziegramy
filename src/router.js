@@ -17,6 +17,10 @@ router.post("/addedcourt", controller.AddCourt)
 
 router.get("/addevent", controller.renderAddEvent)
 router.post("/addedevent", controller.AddEvent)
+
+router.get("/showevents", controller.showEvent)
+router.post("/chooseevent", controller.ChooseEvent)
+router.post("/becomeparticipant", controller.becomeParticipant)
 router.get("/logout", controller.LogOut)
 
 

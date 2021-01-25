@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1bcb4300-1071-4a82-aea2-a3272c61f371" name="Default Changelist" comment="Add adding new courts functionality">
-      <change afterPath="$PROJECT_DIR$/src/model/Sport.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/home.hbs" afterDir="false" />
+    <list default="true" id="1bcb4300-1071-4a82-aea2-a3272c61f371" name="Default Changelist" comment="Add adding new events functionality">
+      <change afterPath="$PROJECT_DIR$/src/model/Level.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/Participant.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/showevents.hbs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/showparticipants.hbs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Adress.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Adress.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Court.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Court.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Event.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Event.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/User.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/addcourt.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/addcourt.hbs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/addevent.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/addevent.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/home.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/home.hbs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/login.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/login.hbs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,6 +54,7 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\views" />
+      <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\src\model" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\src" />
@@ -78,7 +82,9 @@
       <workItem from="1610995884574" duration="1894000" />
       <workItem from="1610999406200" duration="2000" />
       <workItem from="1611051097312" duration="10154000" />
-      <workItem from="1611141690336" duration="594000" />
+      <workItem from="1611141690336" duration="5551000" />
+      <workItem from="1611235796055" duration="4409000" />
+      <workItem from="1611567951858" duration="1935000" />
     </task>
     <task id="LOCAL-00001" summary="Add adding new courts functionality">
       <created>1610999248415</created>
@@ -87,7 +93,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610999248415</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Add adding new events functionality">
+      <created>1611142352443</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1611142352443</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -107,6 +120,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add adding new courts functionality" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add adding new courts functionality" />
+    <MESSAGE value="Add adding new events functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add adding new events functionality" />
   </component>
 </project>

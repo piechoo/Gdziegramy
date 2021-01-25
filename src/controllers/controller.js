@@ -4,6 +4,8 @@ const Court = require("../model/Court")
 const Adress = require("../model/Adress")
 const Sport = require("../model/Sport")
 const Event = require("../model/Event")
+const Participant = require("../model/Participant")
+const Level = require("../model/Level")
 
 exports.renderHome = (request, response) => {
     if (request.session.loggedin) {
@@ -71,7 +73,7 @@ exports.AddEvent = async (request, response) => {
             CourtID: court,
             startTime: start,
             endTime: end,
-            level: level,
+            LevelID: level,
             UserID: user.UserID,
             SportID: sportid.SportID
         })
@@ -206,4 +208,102 @@ exports.getAdress = (req, res) =>{
             res.send(adress);
         })
         .catch(err=>console.log(err));
+}
+
+exports.showEvent = (req, res) =>{
+    let eventlist;
+    Event.findAll({
+        include: [
+            {
+                model: Sport,
+            },
+            {
+                model: Court,
+
+                include:[
+                    {
+                        model: Adress,
+                    },
+                ]
+            },
+            {
+                model: Level,
+            }]
+    })
+        .then( event=>{
+            eventlist=event;
+            res.render("showevents",{
+                events: eventlist
+            })
+        })
+        .catch(err=>console.log(err));
+}
+
+exports.ChooseEvent = async (request, response) => {
+    let event = request.body.event;
+    let user = request.session.username;
+    console.log(event)
+
+    let ev = await Event.findOne({
+        where: {
+            EventID: event
+        },
+        include: [
+            {
+                model: Sport,
+            },
+            {
+                model: Court,
+
+                include:[
+                    {
+                        model: Adress,
+                    },
+                ]
+            },
+            {
+                model: Level,
+            }]
+    })
+    Participant.findAll({
+        where: {
+            EventID: event
+        },
+        include:[
+            {
+                model: User,
+                include:[
+                    {
+                        model: Level,
+                    },
+                ]
+            },
+        ]
+    })
+        .then(parts=>{
+            response.render("showparticipants",{
+                event: ev,
+                participants: parts,
+            })
+            console.log(JSON.stringify(parts))
+            //console.log(JSON.stringify(ev))
+        })
+        .catch(err=>console.log(err));
+
+}
+
+exports.becomeParticipant = async (request, response) => {
+    let event = request.body.event;
+    let user = request.session.username;
+    //console.log(user)
+    let usr = await User.findOne({ where: { Name: user } });
+    //console.log(usr)
+    Participant.create({
+        EventID:event,
+        UserID: usr.UserID
+    })
+        .then( adress=>{
+            response.send(adress);})
+        .catch(err => console.log(err))
+
 }

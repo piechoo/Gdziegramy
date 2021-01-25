@@ -1,6 +1,9 @@
 const Sequelize = require("sequelize");
 const db = require("./database");
 const Sport = require("../model/Sport")
+const Level = require("../model/Level")
+const Court = require("../model/Court")
+const Adress = require("../model/Adress")
 
 const Event = db.define('events',{
     EventID: {
@@ -21,7 +24,7 @@ const Event = db.define('events',{
     endTime:{
         type: Sequelize.DATE
     },
-    level:{
+    LevelID:{
         type: Sequelize.TINYINT
     },
     UserID:{
@@ -35,4 +38,7 @@ const Event = db.define('events',{
 })
 
 Event.belongsTo(Sport, {foreignKey: 'SportID'});
+Event.belongsTo(Level, {foreignKey: 'LevelID'});
+Event.belongsTo(Court, {foreignKey: 'CourtID'});
+Event.belongsTo(Adress, {foreignKey: 'CourtID'});
 module.exports = Event;

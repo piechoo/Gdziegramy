@@ -40,20 +40,11 @@
 </head>
 <body>
 <div class="login-form">
-    <h1>Dodaj nowe wydarzenie</h1>
-    <form action="addedevent" method="POST">
-        <label for="name">Wpisz nazwę wydarzenia :</label>
-        <input type="text" name="name" placeholder="Nazwa wydarzenia" required>
-        <label for="level">Wybierz poziom :</label>
-        <input type="number" min="1" max="5" name="level" placeholder="Poziom" required><br>
-        <label for="starttime">Wybierz czas rozpoczęcia :</label>
-        <input type="datetime-local" id="sterttime" name="starttime"><br>
-        <label for="endtime">Wybierz czas zakończenia:</label>
-        <input type="datetime-local" id="endtime" name="endtime"><br>
-        <label for="court">Wybierz  boisko:</label>
-        <select id="court" name="court" required>
-            {{#each korty}}
-                <option value= {{this.CourtID}}>{{this.adress.city}} {{this.adress.street}} {{this.adress.number}} {{this.sport.name}}</option>
+    <h1>Wybierz wydarzenie: </h1>
+    <form action="chooseevent" method="POST">
+        <select id="event" name="event" required>
+            {{#each events}}
+                <option value= {{this.EventID}}> {{this.name}} {{this.court.adress.city}} {{this.court.adress.street}} {{this.court.adress.number}} {{this.startTime}} {{this.sport.name}}</option>
             {{/each}}
         </select>
         <input type="submit">

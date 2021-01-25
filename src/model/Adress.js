@@ -19,7 +19,6 @@ const Adress = db.define('adresses', {
         },
         coordinates: {
             type: Sequelize.GEOMETRY('POINT', 4326)
-
         }
     },{
 

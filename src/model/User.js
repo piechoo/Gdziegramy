@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("./database");
+const Level = require("../model/Level")
 
 const User = db.define('user',{
     UserID: {
@@ -10,7 +11,7 @@ const User = db.define('user',{
     Name:{
         type: Sequelize.STRING
     },
-    level:{
+    LevelID:{
         type: Sequelize.TINYINT
     },
     password:{
@@ -21,5 +22,5 @@ const User = db.define('user',{
     }
 
 })
-
+User.belongsTo(Level, {foreignKey: 'LevelID'});
 module.exports = User;
