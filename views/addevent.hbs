@@ -2,61 +2,81 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Gdziegramy Login</title>
+    <title>Dodaj wydarzenie</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
     <style>
+        body{
+            background-color: #e2e2e2;
+        }
         .login-form {
-            width: 300px;
-            margin: 0 auto;
-            font-family: Tahoma, Geneva, sans-serif;
+            width: 28%;
+            margin: 50px auto;
+            font-size: 15px;
         }
-        .login-form h1 {
-            text-align: center;
-            color: #4d4d4d;
-            font-size: 24px;
-            padding: 20px 0 20px 0;
-        }
-        .login-form input[type="password"],
-        .login-form input[type="number"],
-        .login-form input[type="datetime-local"],
-        .login-form select,
-        .login-form input[type="text"] {
-            width: 100%;
-            padding: 15px;
-            border: 1px solid #dddddd;
+        .login-form form {
             margin-bottom: 15px;
-            box-sizing:border-box;
+            background: #f7f7f7;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 3%;
         }
-        .login-form input[type="submit"] {
-            width: 100%;
-            padding: 15px;
-            background-color: #535b63;
-            border: 0;
-            box-sizing: border-box;
-            cursor: pointer;
+        .login-form h2 {
+            margin: 0 0 15px;
+        }
+        .form-control, .btn {
+            min-height: 38px;
+            border-radius: 2px;
+        }
+        .btn {
+            font-size: 15px;
             font-weight: bold;
-            color: #ffffff;
+        }
+        .form-group{
+            margin-bottom: 1rem;
         }
     </style>
 </head>
 <body>
+<nav class="navbar navbar-dark bg-danger">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/home"><b>Gdzie Gramy?</b></a>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><a class="text-white" href="/logout">Wyloguj</a></li>
+        </ul>
+    </div>
+</nav>
 <div class="login-form">
-    <h1>Dodaj nowe wydarzenie</h1>
-    <form action="addedevent" method="POST">
-        <label for="name">Wpisz nazwę wydarzenia :</label>
-        <input type="text" name="name" placeholder="Nazwa wydarzenia" required>
-        <label for="level">Wybierz poziom :</label>
-        <input type="number" min="1" max="5" name="level" placeholder="Poziom" required><br>
-        <label for="starttime">Wybierz czas rozpoczęcia :</label>
-        <input type="datetime-local" id="sterttime" name="starttime"><br>
-        <label for="endtime">Wybierz czas zakończenia:</label>
-        <input type="datetime-local" id="endtime" name="endtime"><br>
-        <label for="court">Wybierz  boisko:</label>
-        <select id="court" name="court" required>
-            {{#each korty}}
-                <option value= {{this.CourtID}}>{{this.adress.city}} {{this.adress.street}} {{this.adress.number}} {{this.sport.name}}</option>
-            {{/each}}
-        </select>
-        <input type="submit">
+    <form action="addevent" method="post">
+        <h2 class="text-center">Dodaj nowe wydarzenie: </h2>
+        <div class="form-group">
+            <input type="text" name="name" class="form-control" placeholder="Nazwa wydarzenia" required="required">
+        </div>
+        <div class="form-group">
+            <input type="number" min="1" max="5" name="level" class="form-control" placeholder="Poziom" required="required">
+        </div>
+        <div class="form-group">
+            <label for="starttime">Czas rozpoczęcia :</label>
+            <input type="datetime-local" id="sterttime" name="starttime" class="form-control" required="required">
+        </div>
+        <div class="form-group">
+            <label for="starttime">Czas zakończenia :</label>
+            <input type="datetime-local" id="endtime" name="endtime" class="form-control"  required="required">
+        </div>
+        <div class="form-group">
+            <label for="court">Boisko:</label>
+            <select class="form-select" id="court" name="court" required>
+                {{#each korty}}
+                    <option value= {{this.CourtID}}>{{this.adress.city}} {{this.adress.street}} {{this.adress.number}} {{this.sport.name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="form-group d-grid">
+            <button type="submit" class="btn btn-danger">Wyślij</button>
+        </div>
     </form>
 
 </div>

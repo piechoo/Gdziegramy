@@ -1,19 +1,11 @@
-const Op = require('sequelize').Op;
+const db = require("../model/database")
 const User = require("../model/User")
-const User_rating = require("../model/User_rating")
 const Court = require("../model/Court")
 const Adress = require("../model/Adress")
 const Sport = require("../model/Sport")
 const Event = require("../model/Event")
 const Participant = require("../model/Participant")
 const Level = require("../model/Level")
-const {findMyParticipatedEvents} = require("./functions");
-const {markEventUsers} = require("./functions");
-const {findMyCreatedEvents} = require("./functions");
-const {findParticipantsFromEvent} = require("./functions");
-const {findEventByID} = require("./functions");
-const {findActualEvents} = require("./functions");
-const {calculateParticipantsLevels} = require("./functions");
 
 exports.renderHome = (req, res) => {
     if (req.session.loggedin) {
@@ -168,7 +160,7 @@ exports.AddCourt = async (req, res) => {
             })
                 .catch(err => console.log(err))
         })
-        .then( res.redirect("/home"))
+        .then( res.redirect("/courts"))
         .catch(err => console.log(err))
 
     res.end();
@@ -193,9 +185,7 @@ exports.searchCourt = (req, res) =>{
     })
         .then( event=>{
             courtlist=event;
-            res.render("showsearchcourts",{
-                courts:courtlist
-            })
+            res.send(courtlist)
         })
         .catch(err=>console.log(err));
 }
@@ -205,6 +195,7 @@ exports.LogIn = async (req, res) => {
     let password = req.body.password;
     if (username && password) {
         let results = await User.findAll({
+            attributes: ['Name'],
             where: {
                 Name: username,
                 password: password,
@@ -214,7 +205,6 @@ exports.LogIn = async (req, res) => {
         if (results.length > 0) {
             req.session.loggedin = true;
             req.session.username = username;
-            req.session.userid = results[0].UserID;
             res.redirect('/home');
             res.end();
         } else {
@@ -268,28 +258,84 @@ exports.getAdress = (req, res) =>{
         .catch(err=>console.log(err));
 }
 
-exports.showEvent = async (req, res) => {
-    let eventlist = await findActualEvents()
-    res.render("showevents", {
-        events: eventlist
-    })
+exports.showEvent = (req, res) =>{
+    let eventlist;
+    Event.findAll({
+        include: [
+            {
+                model: Sport,
+            },
+            {
+                model: Court,
 
+                include:[
+                    {
+                        model: Adress,
+                    },
+                ]
+            },
+            {
+                model: Level,
+            }]
+    })
+        .then( event=>{
+            eventlist=event;
+            res.render("showevents",{
+                events: eventlist
+            })
+        })
+        .catch(err=>console.log(err));
 }
 
 exports.ChooseEvent = async (req, res) => {
     let event = req.body.event;
     let user = req.session.username;
+    console.log(event)
 
-    let ev = await findEventByID(event)
+    let ev = await Event.findOne({
+        where: {
+            EventID: event
+        },
+        include: [
+            {
+                model: Sport,
+            },
+            {
+                model: Court,
 
-    let parts = await findParticipantsFromEvent(event)
-    let level = await calculateParticipantsLevels(parts)
-
-    res.render("showparticipants",{
-        event: ev,
-        participants: parts,
-        levels: level
+                include:[
+                    {
+                        model: Adress,
+                    },
+                ]
+            },
+            {
+                model: Level,
+            }]
     })
+    Participant.findAll({
+        where: {
+            EventID: event
+        },
+        include:[
+            {
+                model: User,
+                include:[
+                    {
+                        model: Level,
+                    },
+                ]
+            },
+        ]
+    })
+        .then(parts=>{
+            res.render("showparticipants",{
+                event: ev,
+                participants: parts,
+            })
+            console.log(JSON.stringify(parts))
+        })
+        .catch(err=>console.log(err));
 
 }
 
@@ -318,109 +364,4 @@ exports.becomeParticipant = async (req, res) => {
             })
         }
 
-}
-
-exports.myEvents = async (req, res) => {
-    let event = req.body.event;
-    let user = req.session.username;
-    let userid = req.session.userid;
-    let events = await findMyParticipatedEvents(userid)
-
-    res.render("showmyevents",{
-        events: events
-    })
-}
-
-exports.myEventsParticipants = async (req, res) => {
-    let event = req.body.EventID;
-    let user = req.session.username;
-    let userid = req.session.userid;
-
-    let ev = await findEventByID(event)
-    let parts = await Participant.findAll({
-        where: {
-            EventID: event,
-            UserID: { [Op.ne]: req.session.userid},
-        },
-        include:[
-            {
-                model: User,
-            },
-        ]
-    })
-
-    let userlevels = await calculateParticipantsLevels(parts)
-    res.render("showmyparticipants",{
-        event: ev,
-        participants: parts,
-        levels: userlevels
-    })
-
-}
-
-exports.markEvents = async (req, res) => {
-    let event = req.body;
-    let user = req.session.username;
-    let userid = req.session.userid;
-    markEventUsers(event,userid)
-
-    res.redirect("/showevent")
-}
-
-
-exports.createdEvents = async (req, res) => {
-    let user = req.session.username;
-    let userid = req.session.userid;
-    let createdevents = await findMyCreatedEvents(userid)
-    res.render("showcreatedevents",{
-        events: createdevents
-    })
-}
-
-exports.createdEventsParticipants = async (req, res) => {
-    let event = req.body.EventID;
-    let user = req.session.username;
-    let userid = req.session.userid;
-
-    let ev = await findEventByID(event)
-
-    let parts = await Participant.findAll({
-        where: {
-            EventID: event,
-            UserID: { [Op.ne]: req.session.userid},
-        },
-        include:[
-            {
-                model: User,
-            },
-        ]
-    })
-    let usersLevel = await calculateParticipantsLevels(parts)
-
-
-    res.render("showcreatedparticipants",{
-        event: ev,
-        participants: parts,
-        levels: usersLevel
-    })
-
-}
-
-exports.kickPlayer = async (req, res) => {
-    let player = req.body;
-    let user = req.session.username;
-    let userid = req.session.userid;
-
-    let eventid;
-    let deletedusr;
-    for (var x in player) {
-        eventid = x;
-        deletedusr = player[x];
-        Participant.destroy({
-            where: {
-                EventID: eventid,
-                UserID: deletedusr
-            }
-        }).then(res.redirect("/createdevents"))
-    }
 }

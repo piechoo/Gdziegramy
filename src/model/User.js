@@ -11,9 +11,6 @@ const User = db.define('user',{
     Name:{
         type: Sequelize.STRING
     },
-    LevelID:{
-        type: Sequelize.TINYINT
-    },
     password:{
         type: Sequelize.STRING
     },
@@ -22,5 +19,4 @@ const User = db.define('user',{
     }
 
 })
-User.belongsTo(Level, {foreignKey: 'LevelID'});
 module.exports = User;

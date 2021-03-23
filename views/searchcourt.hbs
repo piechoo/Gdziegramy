@@ -50,17 +50,13 @@
     </div>
 </nav>
 <div class="login-form">
-    <form action="chooseevent" method="post">
-        <h2 class="text-center">Wybierz wydarzenie: </h2>
+    <form action="searchcourt" method="post">
+        <h2 class="text-center">W jakim mieście wyszukać boisk ? </h2>
         <div class="form-group">
-            <select class="form-select" id="event" name="event" required>
-                {{#each events}}
-                    <option value= {{this.EventID}}> {{this.name}} {{this.court.adress.city}} {{this.court.adress.street}} {{this.court.adress.number}} {{this.startTime}} {{this.sport.name}}</option>
-                {{/each}}
-            </select>
+            <input type="text" name="city" class="form-control" placeholder="Miasto" required="required">
         </div>
         <div class="form-group d-grid">
-            <button type="submit" class="btn btn-danger">Szczegóły</button>
+            <button type="submit" class="btn btn-danger">Wyślij</button>
         </div>
 
     </form>

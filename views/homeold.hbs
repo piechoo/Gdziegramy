@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Gdziegramy Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            font-family: Tahoma, Geneva, sans-serif;
+            height: 100vh;
+            width: 100vw;
+            background:url("images/stadium.jpg");
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-size: 100% 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #111;
+        }
+        .hello {
+            color: #dddddd;
+            background-color: #535b63;
+            margin: 0;
+            opacity: 0.9;
+            height: 40%;
+            border-radius: 15%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            width: 25%;
+            margin: 0 auto;
+            font-family: Tahoma, Geneva, sans-serif;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div >
+    <ul>
+    <li><a href="/addevent"> Dodaj wydarzenie</a></li>
+    <li><a href="/addcourt"> Dodaj boisko</a></li>
+    <li><a href="/showevents"> Przeglądaj wydarzenia</a></li>
+    <li style="float:right"><a  href="/logout"> Wyloguj się</a></li>
+    </ul>
+
+    <div class="hello">
+            <h1>Witaj {{user}}</h1>
+    </div>
+</div>
+</body>
+</html>

@@ -22,7 +22,8 @@ app.use(bodyParser.json());
 app.set("views", "views")
 app.set("view engine", "hbs")
 app.use("/",router)
-
+app.use(express.static(__dirname+'/public'));
+console.log(__dirname+'/public')
 
 
 app.listen('3000',()=>{

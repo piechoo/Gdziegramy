@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Wydarzenia</title>
+    <title>Zawodnicy</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
     <style>
@@ -35,6 +35,27 @@
         .form-group{
             margin-bottom: 1rem;
         }
+
+
+        .login-form input[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            background-color: #535b63;
+            border: 0;
+            box-sizing: border-box;
+            cursor: pointer;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 4%;
+        }
+
     </style>
 </head>
 <body>
@@ -50,20 +71,24 @@
     </div>
 </nav>
 <div class="login-form">
-    <form action="chooseevent" method="post">
-        <h2 class="text-center">Wybierz wydarzenie: </h2>
-        <div class="form-group">
-            <select class="form-select" id="event" name="event" required>
-                {{#each events}}
-                    <option value= {{this.EventID}}> {{this.name}} {{this.court.adress.city}} {{this.court.adress.street}} {{this.court.adress.number}} {{this.startTime}} {{this.sport.name}}</option>
-                {{/each}}
-            </select>
-        </div>
-        <div class="form-group d-grid">
-            <button type="submit" class="btn btn-danger">Szczegóły</button>
-        </div>
-
+    <form action="kickplayer" method="POST">
+        <h5>Użytkownicy biorący udział w wydarzeniu o nazwie: {{event.name}} {{event.court.adress.city}} {{event.court.adress.street}} {{event.court.adress.number}} {{event.startTime}} {{event.sport.name}}</h5>
+        <table id="users">
+            <tbody>
+                <th> Nazwa użytkownika</th>
+                <th> Aktualny Poziom</th>
+                <th> Wyrzuć z wydarzenia </th>
+                    {{#each participants}}
+                        <tr>
+                            <td> {{this.user.Name}} </td>
+                            <td>{{lookup ../levels @index}}</td>
+                            <td style="text-align: center"><button type="submit" class="btn btn-danger" name={{../event.EventID}} value={{this.user.UserID}}>Wyrzuć</button></td>
+                        </tr>
+                    {{/each}}
+            </tbody>
+        </table>
     </form>
+
 </div>
 </body>
 </html>
