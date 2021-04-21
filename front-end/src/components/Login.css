@@ -1,0 +1,87 @@
+body{
+    background-color: #e2e2e2;
+}
+.login-form {
+    width: 340px;
+    margin: 50px auto;
+    font-size: 15px;
+}
+.event-form {
+    width: 90%;
+    margin: 20px auto 0 auto;
+    font-size: 15px;
+    background: #f7f7f7;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    border-radius: 3%;
+}
+.users-table{
+    width: 50%;
+    margin: 5% auto;
+    font-size: 15px;
+    background: #f7f7f7;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    border-radius: 20px;
+    font-size: 15px;
+}
+#participants{
+    width: 100%;
+}
+#users{
+    margin: 5% auto;
+    width: 100%;
+}
+#users th, #users td,
+#participants th, #participants td {
+    padding: 1% 1%;
+    border-bottom: 3px solid #9d9b9b;
+}
+#users tr:hover,
+#participants tr:hover
+{background-color: #d2caca;}
+#users th,
+#participants th {
+    background-color: #dc3545;
+    color: white;
+}
+.court-form {
+    width: 340px;
+    margin: 0 auto;
+    font-size: 15px;
+}
+.event{
+    width: 340px;
+    margin: 0 auto;
+    font-size: 15px;
+}
+
+.login-form form {
+    margin-bottom: 15px;
+    background: #f7f7f7;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    border-radius: 3%;
+}
+.login-form h2, event-form h2 {
+    margin: 0 0 15px;
+}
+.form-control, .btn {
+    min-height: 38px;
+    border-radius: 2px;
+}
+.btn {
+    font-size: 15px;
+    font-weight: bold;
+}
+.head{
+    min-height: 10rem;
+}
+.msg {
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: bold;
+}
+.error{
+    color: red;
+}

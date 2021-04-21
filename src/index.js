@@ -3,6 +3,7 @@ const session = require('express-session')
 const bodyParser = require('body-parser')
 const router = require("./router")
 const db = require("./model/database")
+const cors = require("cors");
 
 db.authenticate()
     .then(()=>console.log('Database connected'))
@@ -16,7 +17,7 @@ app.use(session({
     saveUninitialized: true
 }));
 
-
+app.use(cors())
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 app.set("views", "views")
@@ -26,8 +27,8 @@ app.use(express.static(__dirname+'/public'));
 console.log(__dirname+'/public')
 
 
-app.listen('3000',()=>{
-    console.log('Server started on port 3000')
+app.listen('5000',()=>{
+    console.log('Server started on port 5000')
 })
 
 

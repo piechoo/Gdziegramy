@@ -16,6 +16,9 @@ const {findActualEvents} = require("./functions");
 const {calculateParticipantsLevels} = require("./functions");
 
 exports.renderHome = (req, res) => {
+    req.session.loggedin = true;
+    req.session.username = 1;
+    req.session.userid = 6;
     if (req.session.loggedin) {
         res.render("home",{
             user: req.session.username
@@ -120,29 +123,100 @@ exports.AddEvent = async (req, res) => {
     res.end();
 }
 
+exports.AddEventFromMap = async (req, res) => {
+    console.log(req.body)
+    const {event, court, user} = req.body
+    Event.create({
+        name: event.name,
+        CourtID: court.CourtID,
+        startTime: event.start,
+        endTime: event.end,
+        LevelID: event.level,
+        UserID: user,
+        SportID: court.sport.SportID
+    })
+        .then( res.send("sukces"))
+        .catch(err => console.log(err))
+
+    res.end();
+}
+
+
+
 exports.AddUser = async (req, res) => {
     let username = req.body.username;
     let email = req.body.email;
-    //let level = req.body.level;
     let password = req.body.password;
-
-    //let {username, level, password, email} = data;
-    let usr = await User.findOne({ where: { Name: username, email:email } });
-    if(usr!=null)
-    {
-        res.render("login",{
-            error: "Istnieje już użytkownik o takich danych!"
-        })
+    if (!(username && email && password)) {
+        let data={
+            isLogged : false,
+            userID : '',
+            username : '',
+            error: "Brakuje wymaganych danych !"
+        }
+        res.send(data)
+        res.end
     }
-    else {
+    //let {username, level, password, email} = data;
+    let usr = await User.findOne({ where: { Name: username } });
+    let usrEmail = await User.findOne({ where: {  email:email } });
+    if(usr!=null || usrEmail!=null)
+    {
+        let data={
+            isLogged : false,
+            userID : '',
+            username : '',
+            error: "Istnieje już użytkownik o podanych danych !"
+        }
+        res.send(data)
+        res.end
+    }
+    else{
         User.create({
             Name: username,
             password: password,
             email: email
         })
-            .then(res.redirect("/login"))
+            .then(res.send({success:true}))
             .catch(err => console.log(err))
+        res.end
     }
+
+
+}
+
+
+
+exports.AddCourtFromMap = async (req, res) => {
+    let city = req.body.city;
+    let street = req.body.street;
+    let number;
+    if(req.body.number)
+        number = parseInt(req.body.number);
+    else
+        number=0
+    let sport = req.body.sport;
+    let point = { type: 'Point',
+        coordinates: [req.body.cords[0],req.body.cords[1]],
+        crs: { type: 'name', properties: { name: 'EPSG:4326'}}
+    };
+
+    Adress.create({
+        number: number,
+        street: street,
+        city: city,
+        coordinates: point
+    })
+        .then( result => {
+            Court.create({
+                AdressID: result.AdressID,
+                SportID: sport
+            })
+                .catch(err => console.log(err))
+        })
+        .then( res.send(200))
+        .catch(err => console.log(err))
+    res.end();
 }
 
 exports.AddCourt = async (req, res) => {
@@ -212,15 +286,24 @@ exports.LogIn = async (req, res) => {
         });
 
         if (results.length > 0) {
-            req.session.loggedin = true;
-            req.session.username = username;
-            req.session.userid = results[0].UserID;
-            res.redirect('/home');
-            res.end();
+            let data={
+                isLogged : true,
+                userID : results[0].UserID,
+                username : username,
+                error: ""
+            }
+
+            res.send(data)
+            res.end
         } else {
-            res.render("login",{
+            let data={
+                isLogged : false,
+                userID : '',
+                username : '',
                 error: "Niepoprawny login lub hasło!"
-            })
+            }
+            res.send(data)
+            res.end
         }
         }
     else {
@@ -244,7 +327,16 @@ exports.LogOut = async (req, res) => {
 }
 
 exports.getCourts = (req,res)=>{
-    Court.findAll().then( result=>{
+    Court.findAll({
+        include:[
+            {
+                model: Adress
+            },
+            {
+                model: Sport
+            }
+        ]
+    }).then( result=>{
         res.send(result)
         res.end();})
         .catch(err=>console.log(err));
@@ -273,7 +365,12 @@ exports.showEvent = async (req, res) => {
     res.render("showevents", {
         events: eventlist
     })
+}
 
+exports.currentEvents = async (req, res) => {
+    let eventlist = await findActualEvents()
+    res.send(eventlist)
+    res.end()
 }
 
 exports.ChooseEvent = async (req, res) => {
@@ -293,28 +390,35 @@ exports.ChooseEvent = async (req, res) => {
 
 }
 
+
+
 exports.becomeParticipant = async (req, res) => {
     let event = req.body.event;
+    let usrID = req.body.userID;
+    console.log(event)
+    console.log(usrID)
+    /*
     let user = req.session.username;
     let usr = await User.findOne({ where: { Name: user } });
-    let already = await Participant.findOne({ where: { EventID: event,UserID: usr.UserID  } });
+     */
+    let already = await Participant.findOne({ where: { EventID: event,UserID: usrID  } });
         if(already==null) {
             Participant.create({
                 EventID: event,
                 UserID: usr.UserID
             })
                 .then(adress => {
-                    res.render("home",{
-                        error: 'Zapisano na wydarzenie!',
-                        user: user
+                    res.send({
+                        msg: 'Zapisano na wydarzenie!',
+                        error: false
                     })
                 })
                 .catch(err => console.log(err))
         }
         else {
-            res.render("home",{
-                error: 'Jesteś już zapisany na to wydarzenie!',
-                user: user
+            res.send({
+                msg: 'Jesteś już zapisany na to wydarzenie!',
+                error: true
             })
         }
 
@@ -329,6 +433,29 @@ exports.myEvents = async (req, res) => {
     res.render("showmyevents",{
         events: events
     })
+}
+exports.getMyEvents = async (req, res) => {
+    let userid = req.body.userid;
+    let events = await findMyParticipatedEvents(userid)
+
+    res.send(events)
+}
+
+
+exports.getMyEventsParticipants = async (req, res) => {
+    let event = req.body.event;
+    //let user = req.session.username;
+
+
+    let parts = await findParticipantsFromEvent(event)
+    let level = await calculateParticipantsLevels(parts)
+    res.send(
+        {
+            participants: parts,
+            levels: level
+        }
+    )
+
 }
 
 exports.myEventsParticipants = async (req, res) => {
@@ -370,14 +497,17 @@ exports.markEvents = async (req, res) => {
 
 exports.createdEvents = async (req, res) => {
     let user = req.session.username;
-    let userid = req.session.userid;
+    console.log(req.body)
+    //let userid = req.session.userid;
+    let userid = req.body.usrID
     let createdevents = await findMyCreatedEvents(userid)
-    res.render("showcreatedevents",{
+    res.send({
         events: createdevents
     })
 }
 
 exports.createdEventsParticipants = async (req, res) => {
+    console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSS")
     let event = req.body.EventID;
     let user = req.session.username;
     let userid = req.session.userid;
@@ -409,18 +539,20 @@ exports.createdEventsParticipants = async (req, res) => {
 exports.kickPlayer = async (req, res) => {
     let player = req.body;
     let user = req.session.username;
-    let userid = req.session.userid;
-
-    let eventid;
+    let userid = req.body.user;
+    let event = req.body.event;
+/*    let eventid;
     let deletedusr;
     for (var x in player) {
         eventid = x;
         deletedusr = player[x];
+
+ */
         Participant.destroy({
             where: {
-                EventID: eventid,
-                UserID: deletedusr
+                EventID: event,
+                UserID: userid
             }
-        }).then(res.redirect("/createdevents"))
-    }
+        }).then(res.send({msg:"Usunięto zawodnika", error:false}))
+
 }

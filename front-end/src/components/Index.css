@@ -1,0 +1,28 @@
+.index {
+    height: 100vh;
+    width: 100vw;
+    background: url("./images/maciek.jpg") no-repeat;
+    background-size: contain;
+    background-size: 100% 100%;
+    position: relative;
+    overflow: hidden;
+}
+.index__form {
+    background:linear-gradient(to top, rgba(255, 103, 0, 0) 0%, #52575a 100%);
+    border-radius: 50% 50% 0 0 ;
+    margin: 0;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    width: 110%;
+    text-align: center;
+    margin: 0 auto;
+    color: rgba(196,196,196,255);
+    font-family: Tahoma, Geneva, sans-serif;
+}
+.index__link{
+    width: 15%;
+}

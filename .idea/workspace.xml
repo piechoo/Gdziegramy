@@ -2,21 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1bcb4300-1071-4a82-aea2-a3272c61f371" name="Default Changelist" comment="Add becoming participant functionality">
-      <change afterPath="$PROJECT_DIR$/src/controllers/login-controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/index.hbs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/public/images/Image-Source-PlusPNG.com.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/public/images/basket.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/public/images/face.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/public/images/foot.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/public/images/maciek.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/public/images/stadium.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/public/images/tennis.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/public/images/voley.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/User.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/addcourt.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/addcourt.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/addevent.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/addevent.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/adduser.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/adduser.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/home.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/home.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/login.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/login.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/showevents.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/showevents.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/showparticipants.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/showparticipants.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/index.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.hbs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +27,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="CSS File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -47,16 +48,20 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="14.15.1" />
     <property name="javascript.nodejs.core.library.typings.version" value="14.14.17" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/views" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/front-end/src/components" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.2.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\views" />
-      <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\src\model" />
-      <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\src\controllers" />
+      <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\front-end\src\components" />
+      <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\front-end\src\redux\slices" />
+      <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\front-end\src\redux\sagas\requests" />
+      <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\front-end\src\redux\sagas\handlers" />
+      <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\front-end\public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\src\public\images" />
@@ -109,7 +114,20 @@
       <workItem from="1615657262235" duration="5000" />
       <workItem from="1615722888122" duration="5972000" />
       <workItem from="1615997384029" duration="5621000" />
-      <workItem from="1616512005812" duration="520000" />
+      <workItem from="1616512005812" duration="12457000" />
+      <workItem from="1616922109594" duration="15053000" />
+      <workItem from="1617120968540" duration="5195000" />
+      <workItem from="1617374796151" duration="3606000" />
+      <workItem from="1617379170929" duration="5444000" />
+      <workItem from="1617448035583" duration="1629000" />
+      <workItem from="1617631711792" duration="3526000" />
+      <workItem from="1617980908594" duration="615000" />
+      <workItem from="1618047177796" duration="5307000" />
+      <workItem from="1618057039816" duration="2894000" />
+      <workItem from="1618074999843" duration="5778000" />
+      <workItem from="1618745520458" duration="3083000" />
+      <workItem from="1618929287691" duration="606000" />
+      <workItem from="1619024120375" duration="339000" />
     </task>
     <task id="LOCAL-00001" summary="Add adding new courts functionality">
       <created>1610999248415</created>

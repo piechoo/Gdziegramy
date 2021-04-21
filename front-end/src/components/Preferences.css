@@ -1,0 +1,15 @@
+.leaflet-container {
+    width: 70%;
+    height: 93vh;
+    box-sizing: border-box;
+}
+
+.content{
+    width: 30%;
+    box-sizing: border-box;
+    text-align: center;
+}
+.mapWrapper{
+    display: flex;
+    width: 100%;
+}
