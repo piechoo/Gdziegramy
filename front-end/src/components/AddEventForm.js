@@ -2,12 +2,11 @@ import React, {useEffect, useState} from 'react';
 
 import "./Preferences.css"
 import CourtInfo from "./CourtInfo";
-import { useSelector} from "react-redux";
 import axios from "axios";
-
+import { useHistory } from "react-router-dom";
 export default function AddEventForm(props) {
 
-    const options = useSelector((state) => state.options);
+    const [options, setOptions] = useState({isLogged:false});
 
 
     const [newEvent, setNewEvent]=useState({
@@ -20,14 +19,26 @@ export default function AddEventForm(props) {
 
     const [msg, setMsg] = useState("")
     const [error, setError] = useState(false)
-    const [lvl, setLvl] = useState(1)
+    let history = useHistory();
 
+    const addItemToSession = (data) => {
+        let user = JSON.parse(sessionStorage.getItem('user'))
+        Object.assign(user,data)
+        sessionStorage.setItem('user', JSON.stringify(user))
+    }
 
-
-    useEffect(()=>{
-console.log(newEvent.start)
-
-    },[newEvent.start])
+    useEffect(()=>  {
+        if(JSON.parse(sessionStorage.getItem('user'))) {
+            const ops = JSON.parse(sessionStorage.getItem('user'))
+            if(!ops.isLogged) {
+                addItemToSession({error: "Musisz się zalogować żeby widzieć tą stronę!"})
+                history.push("/login")
+            }
+            setOptions(ops);
+        }
+        else
+            history.push("/login")
+    },[])
 
     const createNewEvent = () =>{
         if( props.court.adress.city!="Miasto" ) {

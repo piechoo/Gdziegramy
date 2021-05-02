@@ -14,6 +14,9 @@ const {findParticipantsFromEvent} = require("./functions");
 const {findEventByID} = require("./functions");
 const {findActualEvents} = require("./functions");
 const {calculateParticipantsLevels} = require("./functions");
+const {calculateUserLevel} = require("./functions");
+const {findActualEventsFromCourt} = require("./functions");
+const {doesEventCollide} = require("./functions");
 
 exports.renderHome = (req, res) => {
     req.session.loggedin = true;
@@ -126,18 +129,31 @@ exports.AddEvent = async (req, res) => {
 exports.AddEventFromMap = async (req, res) => {
     console.log(req.body)
     const {event, court, user} = req.body
-    Event.create({
-        name: event.name,
-        CourtID: court.CourtID,
-        startTime: event.start,
-        endTime: event.end,
-        LevelID: event.level,
-        UserID: user,
-        SportID: court.sport.SportID
-    })
-        .then( res.send("sukces"))
-        .catch(err => console.log(err))
 
+    const isColliding = await doesEventCollide(event.start,event.end,court.CourtID)
+    if(isColliding){
+        res.send({
+            msg: 'W tym terminie nie można utworzyć wydarzenia!',
+            error: true
+        })
+    }
+    else {
+
+        Event.create({
+            name: event.name,
+            CourtID: court.CourtID,
+            startTime: event.start,
+            endTime: event.end,
+            LevelID: event.level,
+            UserID: user,
+            SportID: court.sport.SportID
+        })
+            .then(res.send({
+                msg: 'Dodano wydarzenie!',
+                error: false
+            }))
+            .catch(err => console.log(err))
+    }
     res.end();
 }
 
@@ -284,13 +300,17 @@ exports.LogIn = async (req, res) => {
                 password: password,
             }
         });
+        console.log(results)
 
         if (results.length > 0) {
+            let usersLevel = await calculateUserLevel(results[0])
+            console.log(usersLevel)
             let data={
                 isLogged : true,
                 userID : results[0].UserID,
                 username : username,
-                error: ""
+                error: "",
+                level:usersLevel,
             }
 
             res.send(data)
@@ -507,7 +527,6 @@ exports.createdEvents = async (req, res) => {
 }
 
 exports.createdEventsParticipants = async (req, res) => {
-    console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSS")
     let event = req.body.EventID;
     let user = req.session.username;
     let userid = req.session.userid;
@@ -555,4 +574,66 @@ exports.kickPlayer = async (req, res) => {
             }
         }).then(res.send({msg:"Usunięto zawodnika", error:false}))
 
+}
+
+exports.destroyAccount = async (req, res) => {
+    let user = req.body.username;
+    let userid = req.body.userid;
+    User.destroy({
+        where: {
+            Name: user,
+            UserID: userid
+        }
+    }).then(res.send({success:true})).catch(res.send({success:false, error:"Coś poszło nie tak"}))
+}
+
+exports.isPasswordCorrect = async (req, res) => {
+    let userid = req.body.userid;
+    let password = req.body.password;
+    let found = await User.findOne({
+        where: {
+            password: password,
+            UserID: userid
+        }
+    })
+    if(found)
+    res.send({success:true})
+    else
+    res.send({success:false, error:"Podano złe dane !"})
+}
+exports.changePassword = async (req, res) => {
+    let userid = req.body.userid;
+    let password = req.body.password;
+    let found = await User.update({
+        password: password
+    }, {
+        where: {UserID: userid},
+    })
+    if(found)
+        res.send({success:true})
+    else
+        res.send({success:false, error:"Coś poszło nie tak !"})
+}
+exports.changeEmail = async (req, res) => {
+    let userid = req.body.userid;
+    let email = req.body.email;
+    let found = await User.update({
+        email: email
+    }, {
+        where: {UserID: userid},
+    })
+    if(found)
+        res.send({success:true})
+    else
+        res.send({success:false, error:"Coś poszło nie tak !"})
+}
+
+exports.getEventsFromCourt = async (req, res) => {
+    console.log(req.body)
+    const {courtid} = req.body
+    let eventlist = await findActualEventsFromCourt(courtid)
+    res.send(eventlist)
+    res.end()
+
+    res.end();
 }

@@ -1,19 +1,33 @@
 import React, {useEffect, useState} from "react";
 import "./Login.css"
 import {Link, useHistory} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {fetchLogIn, setError} from "../redux/slices/optionsSlice";
 import HomeTile from "./HomeTile";
 
 const Home =(props)=> {
 
-
-    const [name, setName] = useState('');
-    const [userID, setUserID] = useState('');
-    const [password, setPassword] = useState('');
     let history = useHistory();
-    const dispatch = useDispatch();
-    const options = useSelector((state) => state.options);
+    const [options, setOptions] = useState({isLogged:false});
+
+
+    const addItemToSession = (data) => {
+        let user = JSON.parse(sessionStorage.getItem('user'))
+        Object.assign(user,data)
+        sessionStorage.setItem('user', JSON.stringify(user))
+    }
+
+    useEffect(()=>  {
+        if(JSON.parse(sessionStorage.getItem('user'))) {
+            const ops = JSON.parse(sessionStorage.getItem('user'))
+            if(!ops.isLogged) {
+                addItemToSession({error: "Musisz się zalogować żeby widzieć tą stronę!"})
+                history.push("/login")
+            }
+            setOptions(ops);
+        }
+        else
+            history.push("/login")
+
+    },[])
 
     const firstColumn = [
         {

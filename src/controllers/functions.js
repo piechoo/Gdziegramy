@@ -8,6 +8,28 @@ const User = require("../model/User");
 const Participant = require("../model/Participant");
 const {Op} = require("sequelize");
 
+const lvlNames = (number)=>{
+    switch (number){
+        case 1:
+            return "Początkujący"
+            break;
+        case 2:
+            return "Amator"
+            break;
+        case 3:
+            return "Średnio-zaawansowany"
+            break;
+        case 4:
+            return "Zaawansowany"
+            break;
+        case 5:
+            return "Profesjonalista"
+            break;
+        default:
+            return "Początkujący"
+    }
+}
+
 
 exports.calculateParticipantsLevels = async (parts) => {
     let users = [];
@@ -40,6 +62,33 @@ exports.calculateParticipantsLevels = async (parts) => {
     return usersLevel
 }
 
+exports.calculateUserLevel = async (part) => {
+    let user = part.UserID;
+    let usersLevel = {
+        level:1,
+        name:"Początkujący"
+    };
+            let results = await User_rating.findAll({
+                where: {
+                    UserID: user,
+                }
+            });
+            let ratings = 0;
+            let counter = 0;
+            if (results.length > 0) {
+                for (j = 0; j < results.length; j++) {
+                    ratings += results[j].dataValues.rating
+                    counter++
+                }
+                usersLevel  = {
+                    level: Math.floor(ratings / counter),
+                    name: lvlNames(Math.floor(ratings / counter))
+                }
+            }
+
+    return usersLevel
+}
+
 exports.findActualEvents = async ()=>{
     let events = await Event.findAll({
         where: {
@@ -54,6 +103,35 @@ exports.findActualEvents = async ()=>{
             {
                 model: Court,
 
+                include:[
+                    {
+                        model: Adress,
+                    },
+                ]
+            },
+            {
+                model: Level,
+            }]
+    })
+    return events
+}
+
+exports.findActualEventsFromCourt = async (courtid)=>{
+    let events = await Event.findAll({
+        where: {
+            startTime: {
+                [Op.gte]: new Date(),
+            }
+        },
+        include: [
+            {
+                model: Sport,
+            },
+            {
+                model: Court,
+                where:{
+                  CourtID:courtid,
+                },
                 include:[
                     {
                         model: Adress,
@@ -180,3 +258,40 @@ exports.markEventUsers = async (event, userID) =>{
         }
     }
 }
+
+exports.doesEventCollide = async (start, end, court) =>{
+
+    let colEvents1 = await Event.findAll({
+        where: {
+            startTime: {
+                [Op.lte]: end,
+            },
+            endTime: {
+                [Op.gte]: start,
+            },
+            CourtID: court,
+        },
+    })
+    let colEvents2 = await Event.findAll({
+        where: {
+            startTime: {
+                [Op.lte]: start,
+            },
+            endTime: {
+                [Op.gte]: start,
+            },
+            CourtID: court,
+        },
+    })
+    console.log(colEvents2.length)
+    console.log(colEvents1.length)
+    if(colEvents1.length<1 && colEvents2.length<1){
+        console.log("siemz")
+        return false
+    }
+
+    else
+        return true
+}
+
+

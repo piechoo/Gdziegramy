@@ -17,12 +17,30 @@ const MyEvents =(props)=> {
     const [currentEvent, setCurrentEvent] = useState(0);
     let history = useHistory();
     const dispatch = useDispatch();
-    const options = useSelector((state) => state.options);
+    const [options, setOptions] = useState({isLogged:false});
     const myEvents = useSelector((state) => state.events);
 
 
+    const addItemToSession = (data) => {
+        let user = JSON.parse(sessionStorage.getItem('user'))
+        Object.assign(user,data)
+        sessionStorage.setItem('user', JSON.stringify(user))
+    }
+
     useEffect(()=>  {
-        getCreatedEvents()
+        if(JSON.parse(sessionStorage.getItem('user'))) {
+            const ops = JSON.parse(sessionStorage.getItem('user'))
+            if(!ops.isLogged) {
+                addItemToSession({error: "Musisz się zalogować żeby widzieć tą stronę!"})
+                history.push("/login")
+            }
+            setOptions(ops);
+            dispatch(fetchMyEvents({userID:options.userID}))
+            getCreatedEvents(ops.userID)
+        }
+        else
+            history.push("/login")
+
     },[])
 
     const lvlNames = (number)=>{
@@ -46,10 +64,10 @@ const MyEvents =(props)=> {
                 return "Początkujący"
         }
     }
-    const getCreatedEvents = () =>{
+    const getCreatedEvents = (userid) =>{
         axios.post(`http://localhost:5000/createdevents/`,
             {
-                usrID:options.userID
+                usrID:userid
             },
         ).then(response => {
             console.log(response)

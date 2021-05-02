@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import "./Login.css"
 import {Link, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchLogIn,clearError} from "../redux/slices/optionsSlice";
+//import {fetchLogIn,clearError} from "../redux/slices/optionsSlice";
 
 const Login =(props)=> {
 
@@ -12,41 +12,59 @@ const Login =(props)=> {
     const [userID, setUserID] = useState('');
     const [error, setError] = useState('');
     const [password, setPassword] = useState('');
+    const [options, setOptions] = useState({isLogged:false});
     let history = useHistory();
-    const dispatch = useDispatch();
-    const options = useSelector((state) => state.options);
+    //const dispatch = useDispatch();
+    //const options = useSelector((state) => state.options);
 
+    const clearError = ()=>{
+        sessionStorage.setItem('error', "");
+    }
+
+
+    const addItemToSession = (data) => {
+        let user = JSON.parse(sessionStorage.getItem('user'))
+        Object.assign(user,data)
+        sessionStorage.setItem('user', JSON.stringify(user))
+    }
 
     useEffect(()=>  {
-        dispatch(clearError())
-        if(options.isLogged)
-            history.push("/home")
-    },[options.isLogged])
+        if(JSON.parse(sessionStorage.getItem('user'))) {
+            const ops = JSON.parse(sessionStorage.getItem('user'))
+            if(ops.isLogged) {
+                history.push("/home")
+            }
+            setOptions(ops);
+        }
+    },[])
 
     const login = () => {
-        dispatch(fetchLogIn({name,password}))
+        console.log(options)
         if(options.isLogged)
             history.push("/home")
 
-        /*
         axios.post(`http://localhost:5000/login/`,
             {
                 username:name,
                 password:password,
             },
         ).then(response => {
-            if(response.data.loggedin){
+            console.log(response.data)
+            const {isLogged,userID,username,error,level}=response.data
+            if(isLogged){
+                sessionStorage.setItem('user', JSON.stringify({username,userID,isLogged,error,level}));
                 history.push("/home")
             }
             else {
                 console.log(response.data.error)
-                setError(response.data.error)
+                sessionStorage.setItem('user', JSON.stringify({username,userID,isLogged,error,level}));
+                setOptions(JSON.parse(sessionStorage.getItem('user')));
             }
         })
             .catch(error => {
                 console.error('There was an error!', error);
             });
-*/
+
     }
 
 

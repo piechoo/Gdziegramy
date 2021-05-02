@@ -1,12 +1,9 @@
 import React,{useEffect, useState} from 'react';
 import { MapContainer, TileLayer, Marker, Popup,useMapEvents } from 'react-leaflet'
 import "./Preferences.css"
-import NewCourtForm from "./NewCourtForm";
 import { OpenStreetMapProvider } from "react-leaflet-geosearch";
 import SearchControl from "./SearchControl"
 import axios from "axios";
-import CourtInfo from "./CourtInfo";
-import EventInfo from "./EventInfo";
 import AddEventForm from "./AddEventForm";
 
 
@@ -32,8 +29,6 @@ export default function AddEvent() {
         axios.get(`http://localhost:5000/courts/`,)
             .then(response => {
             console.log(response)
-            //setParticipants(response.data.participants)
-            //setLevels(response.data.levels)
             setCourts(response.data)
         })
             .catch(error => {

@@ -12,17 +12,28 @@ const AddUser =(props)=> {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [userID, setUserID] = useState('');
-
+    const [options, setOptions] = useState({isLogged:false});
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     let history = useHistory();
     const dispatch = useDispatch();
-    const options = useSelector((state) => state.options);
 
+
+    const addItemToSession = (data) => {
+        let user = JSON.parse(sessionStorage.getItem('user'))
+        Object.assign(user,data)
+        sessionStorage.setItem('user', JSON.stringify(user))
+    }
 
     useEffect(()=>  {
-        dispatch(clearError())
-        if(options.isLogged)
-            history.push("/home")
+        addItemToSession({error: ""})
+        if(JSON.parse(sessionStorage.getItem('user'))) {
+            const ops = JSON.parse(sessionStorage.getItem('user'))
+            if(ops.isLogged) {
+                history.push("/home")
+            }
+            setOptions(ops);
+        }
     },[])
 
     const addUser = () => {
@@ -36,11 +47,12 @@ const AddUser =(props)=> {
         ).then(response => {
             console.log(response)
             if(response.data.success){
+                addItemToSession({error:"Dodano użytkownika"})
                 history.push("/login")
             }
             else {
-                console.log(response.data.error)
-                dispatch(setError({error:response.data.error}))
+                addItemToSession({error:response.data.error})
+                setError(response.data.error)
             }
         })
             .catch(error => {
@@ -74,7 +86,7 @@ const AddUser =(props)=> {
         <div>
             <div className="head">
             </div>
-            <h1 className="text-center text-danger">{options.error}</h1>
+            <h1 className="text-center text-danger">{error}</h1>
             <div className="login-form">
                 <form >
                     <h2 className="text-center">Zarejestruj się</h2>

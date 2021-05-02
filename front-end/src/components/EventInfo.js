@@ -3,28 +3,29 @@ import React, {useEffect, useState} from 'react';
 import "./Preferences.css"
 import axios from "axios";
 import CourtInfo from "./CourtInfo";
-import {useDispatch, useSelector} from "react-redux";
-import {clearError} from "../redux/slices/optionsSlice";
-import {fetchMyEvents} from "../redux/slices/eventsSlice";
+import {useHistory} from "react-router-dom";
 export default function EventInfo(props) {
 
-
-    const dispatch = useDispatch();
-    const options = useSelector((state) => state.options);
-
-
-    const [event, setEvent]=useState({
-        eventID:props.event.EventID,
-        name:props.event.name,
-        start:props.event.startTime,
-        end:props.event.endTime,
-        level:props.event.level.levelName
-    })
+    const [options, setOptions] = useState({isLogged:false});
+    const addItemToSession = (data) => {
+        let user = JSON.parse(sessionStorage.getItem('user'))
+        Object.assign(user,data)
+        sessionStorage.setItem('user', JSON.stringify(user))
+    }
+    const [event, setEvent]=useState({eventID: 0,
+        name:"Nazwa wydarzenia",
+        startTime:"Start wydarzenia",
+        endTime:"Koniec wydarzenia",
+        level:{levelName:"Poziom wydarzenia"}})
     const [parts, setParts]=useState([])
     const [levels, setLevels] = useState([]);
+    const [courtEvents, setCourtEvents] = useState([]);
     const [details, setDetails] = useState(false)
     const [msg, setMsg] = useState("")
     const [error, setError] = useState(false)
+    const [actualEvent, setActualEvent] = useState(0)
+    const [numberOfEvents, setNumberOfEvents] = useState(0)
+    let history = useHistory();
 
     const lvlNames = (number)=>{
         switch (number){
@@ -50,21 +51,30 @@ export default function EventInfo(props) {
 
 
     useEffect(()=>{
-        console.log(props.event)
-        setEvent({
-            eventID:props.event.EventID,
-            name:props.event.name,
-            start:props.event.startTime,
-            end:props.event.endTime,
-            level:props.event.level.levelName
-        })
-    },[props.event])
+
+
+        if(JSON.parse(sessionStorage.getItem('user'))) {
+            const ops = JSON.parse(sessionStorage.getItem('user'))
+            if(!ops.isLogged) {
+                addItemToSession({error: "Musisz się zalogować żeby widzieć tą stronę!"})
+                history.push("/login")
+            }
+            setOptions(ops);
+            let actual = props.courtEvents
+            actual.sort(compare);
+            setCourtEvents(actual)
+            setNumberOfEvents(props.courtEvents.length)
+            setEvent(props.courtEvents[0])
+        }
+        else
+            history.push("/login")
+    },[props.courtEvents])
 
     const getParticipants = () =>{
-        if( event.eventID !== 0) {
+        if( event.EventID !== 0) {
             axios.post(`http://localhost:5000/getmyeventsparticipants/`,
                 {
-                    event: event.eventID
+                    event: event.EventID
                 },
             ).then(response => {
                 console.log(response)
@@ -80,12 +90,12 @@ export default function EventInfo(props) {
     }
 
     const becomeParticipant = () =>{
-        if( event.eventID ) {
-            console.log(event.eventID)
+        if( event.EventID ) {
+            console.log(event.EventID)
             axios.post(`http://localhost:5000/becomeparticipant/`,
                 {
-                    event: event.eventID,
-                    userID: options.userID
+                    event: event.EventID,
+                    userID: options.UserID
                 },
             ).then(response => {
                 console.log(response)
@@ -103,9 +113,45 @@ export default function EventInfo(props) {
             console.log("siema")
         }
     }
+
+    function compare(a, b) {
+        // Use toUpperCase() to ignore character casing
+        const dateA = a.startTime.toUpperCase();
+        const dateB = b.startTime.toUpperCase();
+
+        let comparison = 0;
+        if (dateA > dateB) {
+            comparison = 1;
+        } else if (dateA < dateB) {
+            comparison = -1;
+        }
+        return comparison;
+    }
+
     const addParticipants = () => {
         getParticipants()
         setDetails(true)
+    }
+    const handleIncrement = () => {
+        setActualEvent(prevCount => prevCount + 1);
+    };
+
+    //Create handleDecrement event handler
+    const handleDecrement = () => {
+        setActualEvent(prevCount => prevCount - 1);
+    };
+
+    const nextEvent = () => {
+        let newValue = actualEvent + 1;
+        setEvent(courtEvents[newValue])
+        setActualEvent(newValue)
+        setDetails(false)
+    }
+    const prevEvent = () => {
+        let newValue = actualEvent - 1;
+        setEvent(courtEvents[newValue])
+        setActualEvent(newValue)
+        setDetails(false)
     }
 
     const info = !details ?(
@@ -122,14 +168,14 @@ export default function EventInfo(props) {
                     <input
                         className='form-control'
                         type="text"
-                        value={event.start}
+                        value={event.startTime}
                         disabled={true}
                     />
                     <label >Koniec wydarzenia:<br/></label>
                     <input
                         className='form-control'
                         type="text"
-                        value={event.end}
+                        value={event.endTime}
                         disabled={true}
                     />
 
@@ -137,7 +183,7 @@ export default function EventInfo(props) {
                     <input
                         className='form-control'
                         type="text"
-                        value={event.level}
+                        value={event.level.levelName}
                         disabled={true}
                     />
                     <button className="btn btn-danger btn-block mt-3 mb-3">Pokaż uczestników </button>
@@ -149,12 +195,14 @@ export default function EventInfo(props) {
                 <table id="participants" className="mt-3">
                     <th> Nazwa Użytkownika</th>
                     <th> Obecny poziom</th>
+                    <tbody>
                     {parts.map( (part,index) =>
                         <tr>
                             <td>{part.user.Name} </td>
                             <td>{lvlNames(levels[index])} </td>
                         </tr>
                     )}
+                    </tbody>
                 </table>
                 <div className="form-group mb-3">
                     <button type='button' className="btn btn-danger btn-block"  onClick={()=>setDetails(false)}>Wróć</button>
@@ -167,6 +215,10 @@ export default function EventInfo(props) {
         <div className="content">
             <span className={error? "error msg":"msg"}>{msg}</span>
             <div className="event-form">
+                <div className="arrows">
+                    <button className="btn btn-danger  " disabled={0===actualEvent} onClick={()=>prevEvent()}>Poprzednie wydarzenie </button>
+                    <button className="btn btn-danger  " disabled={actualEvent===(numberOfEvents-1)} onClick={()=>nextEvent()}>Następne wydarzenie</button>
+                </div>
                 <div className="court">
                     <CourtInfo event={props.court} side={true}></CourtInfo>
                 </div>

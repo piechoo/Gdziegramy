@@ -1,12 +1,9 @@
 import React,{useEffect, useState} from 'react';
-import { MapContainer, TileLayer, Marker, Popup,useMapEvents } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker } from 'react-leaflet'
 import "./Preferences.css"
-import NewCourtForm from "./NewCourtForm";
 import { OpenStreetMapProvider } from "react-leaflet-geosearch";
 import SearchControl from "./SearchControl"
 import axios from "axios";
-import HomeTile from "./HomeTile";
-import CourtInfo from "./CourtInfo";
 import EventInfo from "./EventInfo";
 
 
@@ -14,13 +11,19 @@ export default function CurrentEvents() {
     const [initialPosition, setInitialPosition] = useState([50.06128, 19.93784]);
     const [selectedPosition, setSelectedPosition] = useState([50.06128, 19.93784]);
     const [events , setEvents] = useState([]);
+    const [courtEvents , setCourtEvents] = useState([{eventID: 0,
+        name:"Nazwa wydarzenia",
+        start:"Start wydarzenia",
+        end:"Koniec wydarzenia",
+        level:{levelName:"Poziom wydarzenia"}}]);
     const [chosenEvent , setChosenEvent] = useState({
         eventID: 0,
         name:"Nazwa wydarzenia",
         start:"Start wydarzenia",
         end:"Koniec wydarzenia",
-        level:"Poziom wydarzenia"});
+        level:{levelName:"Poziom wydarzenia"}});
     const [chosenCourt , setChosenCourt] = useState({
+        courtId:0,
         sport:{name:"Nazwa sportu"},
         adress:{city:"Miasto",street:"Ulica",number:"Numer Ulicy"}
     });
@@ -38,20 +41,34 @@ export default function CurrentEvents() {
         axios.get(`http://localhost:5000/currentevents/`,)
             .then(response => {
             console.log(response)
-            //setParticipants(response.data.participants)
-            //setLevels(response.data.levels)
             setEvents(response.data)
         })
             .catch(error => {
                 console.error('There was an error!', error);
             });
     }
+    const getCourtEvents = (courtid) =>{
+        axios.post(`http://localhost:5000/eventsfromcourt/`,
+            {
+                courtid:courtid
+            },
+        ).then(response => {
+                console.log(response)
+                setCourtEvents(response.data)
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    }
 
-    const onMarkerClick= (event)=>{
+    const onMarkerClick = (event)=>{
         console.log(event)
-        setChosenCourt({adress:event.court.adress,
-        sport:event.sport})
-        setChosenEvent(event)
+        setChosenCourt({
+            courtId:event.court.CourtID,
+            adress:event.court.adress,
+            sport:event.sport
+        })
+        getCourtEvents(event.court.CourtID)
 
     }
 
@@ -70,7 +87,7 @@ export default function CurrentEvents() {
     const prov = OpenStreetMapProvider();
     return(
         <div className="mapWrapper">
-            <EventInfo event={chosenEvent} court={chosenCourt}></EventInfo>
+            <EventInfo event={chosenEvent} court={chosenCourt} courtEvents={courtEvents}></EventInfo>
             <MapContainer
                 center={selectedPosition || initialPosition}
                 zoom={13}

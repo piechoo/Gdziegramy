@@ -2,9 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./Login.css"
 import { useHistory } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {clearError, fetchLogIn, setError} from "../redux/slices/optionsSlice";
 import {fetchMyEvents} from "../redux/slices/eventsSlice";
-import HomeTile from "./HomeTile";
 import EventRow from "./EventRow";
 import axios from "axios";
 
@@ -13,16 +11,30 @@ const MarkUsers =(props)=> {
     const [participants, setParticipants] = useState([]);
     const [showParts, setShowParticipants] = useState(false);
     const [levels, setLevels] = useState([]);
-    const [users, setUsers] = useState([]);
+    const [options, setOptions] = useState({isLogged:false});
     let history = useHistory();
     const dispatch = useDispatch();
-    const options = useSelector((state) => state.options);
     const myEvents = useSelector((state) => state.events);
 
+    const addItemToSession = (data) => {
+        let user = JSON.parse(sessionStorage.getItem('user'))
+        Object.assign(user,data)
+        sessionStorage.setItem('user', JSON.stringify(user))
+    }
 
     useEffect(()=>  {
-        dispatch(clearError())
-        dispatch(fetchMyEvents({userID:options.userID}))
+        if(JSON.parse(sessionStorage.getItem('user'))) {
+            const ops = JSON.parse(sessionStorage.getItem('user'))
+            if(!ops.isLogged) {
+                addItemToSession({error: "Musisz się zalogować żeby widzieć tą stronę!"})
+                history.push("/login")
+            }
+            setOptions(ops);
+            dispatch(fetchMyEvents({userID:ops.userID}))
+        }
+        else
+            history.push("/login")
+
     },[])
 
     const getParticipants = (eventID) =>{
@@ -68,15 +80,19 @@ const MarkUsers =(props)=> {
                 <table id="participants">
                     <th> Nazwa Użytkownika</th>
                     <th> Obecna ocena</th>
-                    <th> Oceń </th>
+                    <th> Twoja ocena </th>
                     {participants.map( (part,index) =>
                         <tr>
                             <td>{part.user.Name} </td>
                             <td>{lvlNames(levels[index])} </td>
                             <td>
-
-                                <input type="number" min="1" max="5" name={part.UserID} className="form-control"
-                                       placeholder="Poziom" required="required"/>
+                                <select name="cars" className="form-control" value={levels[index]}>
+                                    <option name="Początkujący" value={1}> (1) Początkujący</option>
+                                    <option name="Amator" value={2}> (2) Amator</option>
+                                    <option name="Średnio-zaawansowany" value={3}> (3) Średnio-zaawansowany</option>
+                                    <option name="Zaawansowny" value={4}> (4) Zaawansowny</option>
+                                    <option name="Profesjonalista" value={5}> (5) Profesjonalista</option>
+                                </select>
                             </td>
                         </tr>
                     )}

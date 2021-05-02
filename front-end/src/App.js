@@ -1,5 +1,5 @@
-import React from "react";
-import {Link, Route, Switch, useHistory} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link, Route, Switch, useHistory, withRouter, useLocation} from "react-router-dom";
 
 import Index from "./components/Index";
 import Login from "./components/Login";
@@ -14,14 +14,27 @@ import CurrentEvents from "./components/CurrentEvents";
 import ShowCourts from "./components/ShowCourts";
 import AddEvent from "./components/AddEvent";
 import MyEvents from "./components/MyEvents";
+import UserButton from "./components/UserButton";
 
+import "./App.css"
+import UserPanel from "./components/UserPanel";
 
-function App() {
-    const dispatch = useDispatch();
-    const options = useSelector((state) => state.options);
+const App=()=> {
+    const [options, setOptions] = useState({isLogged:false});
+    const location = useLocation()
     let history = useHistory();
+    useEffect(()=>  {
+        if(JSON.parse(sessionStorage.getItem('user')))
+            setOptions(JSON.parse(sessionStorage.getItem('user')));
+    },[location.pathname])
     const loginOut = () => {
-        dispatch(logOut())
+        sessionStorage.setItem('user', JSON.stringify({
+            isLogged:false,
+            userID:"",
+            username:"",
+            error:''
+        }));
+        setOptions(JSON.parse(sessionStorage.getItem('user')));
         history.push("/")
     }
 
@@ -37,8 +50,9 @@ function App() {
 
                       <ul className="nav navbar-nav navbar-right">
                           <li>
-                              <button type="button" className="btn btn-link text-white" onClick={loginOut}>{options.username}</button>
+                              <UserButton/>
                           </li>
+
                           <li>
                               <button type="button" className="btn btn-link text-white" onClick={loginOut}>Wyloguj</button>
                           </li>
@@ -57,9 +71,10 @@ function App() {
           <Route path="/showcourts"><ShowCourts/></Route>
           <Route path="/addevent"><AddEvent/></Route>
           <Route path="/createdevents"><MyEvents/></Route>
+          <Route path="/userpanel"><UserPanel/></Route>
         </Switch>
       </div>
   );
 }
 
-export default App;
+export default withRouter(App);
