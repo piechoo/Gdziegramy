@@ -49,4 +49,5 @@ router.post("/ispasswordcorrect", controller.isPasswordCorrect)
 router.post("/changepassword", controller.changePassword)
 router.post("/changeemail", controller.changeEmail)
 router.post("/eventsfromcourt", controller.getEventsFromCourt)
+router.post("/markparticipants", controller.markParticipants)
 module.exports = router

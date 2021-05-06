@@ -95,7 +95,7 @@ export default function EventInfo(props) {
             axios.post(`http://localhost:5000/becomeparticipant/`,
                 {
                     event: event.EventID,
-                    userID: options.UserID
+                    userID: options.userID
                 },
             ).then(response => {
                 console.log(response)

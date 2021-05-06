@@ -3,20 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="1bcb4300-1071-4a82-aea2-a3272c61f371" name="Default Changelist" comment="Add becoming participant functionality">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/AddEvent.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/AddEvent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/AddEventForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/AddEventForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/AddUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/AddUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/CurrentEvents.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/CurrentEvents.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front-end/src/components/EventInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/EventInfo.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front-end/src/components/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/Home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/HomeTile.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/HomeTile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/Login.css" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/Login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front-end/src/components/MarkUsers.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/MarkUsers.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front-end/src/components/MyEvents.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/MyEvents.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/UserButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/UserButton.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/functions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/functions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.js" afterDir="false" />
@@ -135,6 +125,9 @@
       <workItem from="1619540015970" duration="5823000" />
       <workItem from="1619792818048" duration="2468000" />
       <workItem from="1619862257913" duration="2548000" />
+      <workItem from="1619951873695" duration="1416000" />
+      <workItem from="1620052059508" duration="86000" />
+      <workItem from="1620121953847" duration="6166000" />
     </task>
     <task id="LOCAL-00001" summary="Add adding new courts functionality">
       <created>1610999248415</created>

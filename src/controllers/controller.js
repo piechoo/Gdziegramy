@@ -9,6 +9,7 @@ const Participant = require("../model/Participant")
 const Level = require("../model/Level")
 const {findMyParticipatedEvents} = require("./functions");
 const {markEventUsers} = require("./functions");
+const {markUsers} = require("./functions");
 const {findMyCreatedEvents} = require("./functions");
 const {findParticipantsFromEvent} = require("./functions");
 const {findEventByID} = require("./functions");
@@ -425,7 +426,7 @@ exports.becomeParticipant = async (req, res) => {
         if(already==null) {
             Participant.create({
                 EventID: event,
-                UserID: usr.UserID
+                UserID: usrID
             })
                 .then(adress => {
                     res.send({
@@ -464,10 +465,11 @@ exports.getMyEvents = async (req, res) => {
 
 exports.getMyEventsParticipants = async (req, res) => {
     let event = req.body.event;
+    let userid = req.body.userid;
     //let user = req.session.username;
 
 
-    let parts = await findParticipantsFromEvent(event)
+    let parts = await findParticipantsFromEvent(event,userid)
     let level = await calculateParticipantsLevels(parts)
     res.send(
         {
@@ -512,6 +514,14 @@ exports.markEvents = async (req, res) => {
     markEventUsers(event,userid)
 
     res.redirect("/showevent")
+}
+
+exports.markParticipants = async (req, res) => {
+    console.log(req.body)
+    let marks = req.body.marks;
+    let userid = req.body.userid;
+    markUsers(marks,userid)
+    res.send({msg:"Dodano oceny !", error:false})
 }
 
 

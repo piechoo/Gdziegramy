@@ -170,7 +170,7 @@ exports.findEventByID = async (eventId) =>{
     return ev
 }
 
-exports.findParticipantsFromEvent = async (eventId) =>{
+exports.findParticipantsFromEvent = async (eventId,userid) =>{
     let parts = Participant.findAll({
         where: {
             EventID: eventId
@@ -178,6 +178,9 @@ exports.findParticipantsFromEvent = async (eventId) =>{
         include:[
             {
                 model: User,
+                where: {
+                    UserID: {[Op.ne]: userid},
+                }
             },
         ]
     })
@@ -253,6 +256,36 @@ exports.markEventUsers = async (event, userID) =>{
             User_rating.create({
                 UserID: x,
                 rating: event[x],
+                judge: userID
+            })
+        }
+    }
+}
+
+exports.markUsers = async (marks, userID) =>{
+    console.log(marks)
+    for (let x=0; x<marks.length; x++) {
+        console.log(x );
+
+        let results = await User_rating.findAll({
+            where: {
+                UserID: marks[x].userid,
+                judge: userID,
+            }
+        });
+        //check if user was already marked by logged user and update it
+        if (results.length > 0) {
+            await User_rating.update({
+                rating: marks[x].rating,
+            }, {
+                where: {UserID: marks[x].userid,judge: userID,},
+
+            })
+        }
+        else{
+            User_rating.create({
+                UserID: marks[x].userid,
+                rating: marks[x].rating,
                 judge: userID
             })
         }

@@ -32,17 +32,17 @@ const Home =(props)=> {
     const firstColumn = [
         {
             href:"/addcourt",
-            img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Microsoft_Suzhou_Football_Court.jpg/800px-Microsoft_Suzhou_Football_Court.jpg",
+            img:"./images/cropped/football.jpg",
             inside:"Dodaj boisko"
         },
         {
             href:"/addevent",
-            img:"http://cdn.cnn.com/cnnnext/dam/assets/160127095925-tennis-racket-stock-hp-tease-super-tease.jpg",
+            img:"./images/cropped/shot.jpg",
             inside:"Dodaj wydarzenie"
         },
         {
             href:"/showevents",
-            img:"https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/handsome-male-playing-basketball-outdoor-pkpix.jpg",
+            img:"./images/cropped/racket.jpg",
             inside:"Przeglądaj wydarzenia"
         }
     ]
@@ -50,17 +50,17 @@ const Home =(props)=> {
     const secondColumn = [
         {
             href:"/showcourts",
-            img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Microsoft_Suzhou_Football_Court.jpg/800px-Microsoft_Suzhou_Football_Court.jpg",
+            img:"./images/cropped/tennis.jpg",
             inside:"Przeglądaj boiska"
         },
         {
             href:"/markusers",
-            img:"http://cdn.cnn.com/cnnnext/dam/assets/160127095925-tennis-racket-stock-hp-tease-super-tease.jpg",
+            img:"./images/cropped/team.jpg",
             inside:"Oceń graczy"
         },
         {
             href:"/createdevents",
-            img:"https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/handsome-male-playing-basketball-outdoor-pkpix.jpg",
+            img:"./images/cropped/dribble.jpg",
             inside:"Utworzone wydarzenia"
         }
     ]

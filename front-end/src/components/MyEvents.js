@@ -18,8 +18,6 @@ const MyEvents =(props)=> {
     let history = useHistory();
     const dispatch = useDispatch();
     const [options, setOptions] = useState({isLogged:false});
-    const myEvents = useSelector((state) => state.events);
-
 
     const addItemToSession = (data) => {
         let user = JSON.parse(sessionStorage.getItem('user'))
@@ -134,7 +132,6 @@ const MyEvents =(props)=> {
                 </div>
             </div>
         )
-
     }
 
     let rendering = showParts ?
