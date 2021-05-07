@@ -1,5 +1,5 @@
 # Gdziegramy web-app
-Web app made using Node.js, sequelize, MySQL, React, leaflet and bootstrap
+Web app made using Node.js, sequelize, MySQL, React, leaflet and bootstrap  
 This web-app allows user to create sports events, add new courts, become participant in existing events etc
 
 
