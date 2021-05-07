@@ -1,6 +1,7 @@
 // Include Sequelize module
 
 const Sequelize = require('sequelize')
+const config = require('./config')
 
 const wkx = require('wkx')
 Sequelize.GEOMETRY.prototype._stringify = function _stringify(value, options) {
@@ -18,15 +19,14 @@ Sequelize.GEOGRAPHY.prototype._bindParam = function _bindParam(value, options) {
 
 // Creating new Object of Sequelize
 module.exports = new Sequelize(
-    'gdziegramy',
-    'nodeuser',
-    'node', {
+    config.database.name,
+    config.database.user,
+    config.database.password,
+    {
 
-        dialect: 'mysql',
-
-        // By default host is 'localhost'
-        host: 'localhost',
-        define: { timestamps: false }
+        dialect: config.database.dialect,
+        host: config.database.host,
+        define: config.database.define
     },
 
 );

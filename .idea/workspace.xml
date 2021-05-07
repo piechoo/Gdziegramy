@@ -3,67 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="1bcb4300-1071-4a82-aea2-a3272c61f371" name="Default Changelist" comment="Add becoming participant functionality">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/AddEvent.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/AddEvent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/AddEventForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/AddEventForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/AddUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/AddUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/Container.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/CourtInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/CourtInfo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/CurrentEvents.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/CurrentEvents.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/EventInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/EventInfo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/EventRow.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/EventRow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/Home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/HomeTile.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/HomeTile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/Index.css" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/Index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/Login.css" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/Login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/MapWithSearch.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/MarkUsers.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/MarkUsers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/MyEvents.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/MyEvents.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/NewCourt.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/NewCourt.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/NewCourtForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/NewCourtForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/Preferences.css" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/Preferences.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/ShowCourts.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/ShowCourts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/UserPanel.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/UserPanel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/images/Image-Source-PlusPNG.com.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/images/basket.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/images/face.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/images/foot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/images/maciek.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/images/stadium.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/images/tennis.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/images/voley.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/images/Image-Source-PlusPNG.com.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/images/basket.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/images/face.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/images/foot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/images/maciek.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/images/stadium.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/images/tennis.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/images/voley.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/addcourt.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/addcourtold.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/addevent.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/addeventold.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/adduser.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/home.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/homeold.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/index.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/indexold.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/login.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/login.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/loginold.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/searchcourt.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/showcreatedevents.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/showcreatedparticipants.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/showevents.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/showmyevents.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/showmyparticipants.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/showparticipants.hbs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/showsearchcourts.hbs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/database.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,6 +124,7 @@
       <workItem from="1620052059508" duration="86000" />
       <workItem from="1620121953847" duration="6166000" />
       <workItem from="1620323592888" duration="4926000" />
+      <workItem from="1620400568409" duration="1054000" />
     </task>
     <task id="LOCAL-00001" summary="Add adding new courts functionality">
       <created>1610999248415</created>
