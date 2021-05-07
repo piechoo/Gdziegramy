@@ -115,7 +115,7 @@ export default function AddEventForm(props) {
             <span className={error? "error msg":"msg"}>{msg}</span>
             <div className="event-form">
                 <div className="court">
-                    <CourtInfo event={props.court} side={true}></CourtInfo>
+                    <CourtInfo event={props.court} side={true} onClick = {props.onChange}></CourtInfo>
                 </div>
                 <div className="event">
                     {info}

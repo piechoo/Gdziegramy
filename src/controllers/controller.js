@@ -7,6 +7,7 @@ const Sport = require("../model/Sport")
 const Event = require("../model/Event")
 const Participant = require("../model/Participant")
 const Level = require("../model/Level")
+const {findActualSportEvents} = require("./functions");
 const {findMyParticipatedEvents} = require("./functions");
 const {markEventUsers} = require("./functions");
 const {markUsers} = require("./functions");
@@ -186,6 +187,26 @@ exports.getCourts = (req,res)=>{
         .catch(err=>console.log(err));
 }
 
+exports.getSportCourts = (req,res)=>{
+    const sport = req.body.sport;
+    Court.findAll({
+        include:[
+            {
+                model: Adress
+            },
+            {
+                model: Sport,
+                where:{
+                    SportID:sport,
+                },
+            }
+        ]
+    }).then( result=>{
+        res.send(result)
+        res.end();})
+        .catch(err=>console.log(err));
+}
+
 
 exports.getUsers = (req, res) =>{
     User.findAll()
@@ -205,6 +226,12 @@ exports.getAdress = (req, res) =>{
 
 exports.currentEvents = async (req, res) => {
     let eventlist = await findActualEvents()
+    res.send(eventlist)
+    res.end()
+}
+
+exports.currentSportEvents = async (req, res) => {
+    let eventlist = await findActualSportEvents(req.body.sport)
     res.send(eventlist)
     res.end()
 }

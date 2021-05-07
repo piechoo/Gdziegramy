@@ -49,12 +49,25 @@ export default function ShowCourts() {
                 />
                 ) : null
 
+    const getSportCourt = (sport) =>{
+        axios.post(`http://localhost:5000/sportcourts/`,
+            {
+                sport:sport
+            },
+        )
+            .then(response => {
+                setCourts(response.data)
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    }
 
 
     const prov = OpenStreetMapProvider();
     return(
         <div className="mapWrapper">
-            <CourtInfo event={chosenCourt}></CourtInfo>
+            <CourtInfo event={chosenCourt} onClick = {getSportCourt} ></CourtInfo>
             <MapContainer
                 center={selectedPosition || initialPosition}
                 zoom={13}

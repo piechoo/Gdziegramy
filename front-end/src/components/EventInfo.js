@@ -183,7 +183,7 @@ export default function EventInfo(props) {
                     <button className="btn btn-danger  " disabled={actualEvent===(numberOfEvents-1)} onClick={()=>nextEvent()}>Następne wydarzenie</button>
                 </div>
                 <div className="court">
-                    <CourtInfo event={props.court} side={true}></CourtInfo>
+                    <CourtInfo event={props.court} side={true} onClick={props.onClick}></CourtInfo>
                 </div>
                 <div className="event">
                     {info}

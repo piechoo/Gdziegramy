@@ -116,6 +116,36 @@ exports.findActualEvents = async ()=>{
     return events
 }
 
+exports.findActualSportEvents = async (sport)=>{
+    let events = await Event.findAll({
+        where: {
+            startTime: {
+                [Op.gte]: new Date(),
+            }
+        },
+        include: [
+            {
+                model: Sport,
+                where:{
+                    SportID:sport
+                }
+            },
+            {
+                model: Court,
+
+                include:[
+                    {
+                        model: Adress,
+                    },
+                ]
+            },
+            {
+                model: Level,
+            }]
+    })
+    return events
+}
+
 exports.findActualEventsFromCourt = async (courtid)=>{
     let events = await Event.findAll({
         where: {

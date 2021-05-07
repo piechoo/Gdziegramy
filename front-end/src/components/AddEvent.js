@@ -33,6 +33,19 @@ export default function AddEvent() {
                 console.error('There was an error!', error);
             });
     }
+    const getSportCourt = (sport) =>{
+        axios.post(`http://localhost:5000/sportcourts/`,
+            {
+                sport:sport
+            },
+        )
+            .then(response => {
+                setCourts(response.data)
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    }
 
     const onMarkerClick= (court)=>{
         setChosenCourt(court)
@@ -51,7 +64,7 @@ export default function AddEvent() {
     const prov = OpenStreetMapProvider();
     return(
         <div className="mapWrapper">
-            <AddEventForm  court={chosenCourt}></AddEventForm>
+            <AddEventForm  court={chosenCourt} onChange={getSportCourt}></AddEventForm>
             <MapContainer
                 center={selectedPosition || initialPosition}
                 zoom={13}

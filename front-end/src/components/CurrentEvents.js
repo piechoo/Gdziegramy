@@ -38,11 +38,23 @@ export default function CurrentEvents() {
     }, []);
 
     const getEvents = () =>{
-        axios.get(`http://localhost:5000/currentevents/`,)
+        axios.get(`http://localhost:5000/currentevents/`)
             .then(response => {
-            console.log(response)
             setEvents(response.data)
         })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    }
+    const getSportEvents = (sport) =>{
+        axios.post(`http://localhost:5000/currentsportevents/`,
+            {
+                sport:sport
+            },
+        )
+            .then(response => {
+                setEvents(response.data)
+            })
             .catch(error => {
                 console.error('There was an error!', error);
             });
@@ -87,7 +99,7 @@ export default function CurrentEvents() {
     const prov = OpenStreetMapProvider();
     return(
         <div className="mapWrapper">
-            <EventInfo event={chosenEvent} court={chosenCourt} courtEvents={courtEvents}></EventInfo>
+            <EventInfo event={chosenEvent} court={chosenCourt} courtEvents={courtEvents} onClick={getSportEvents}></EventInfo>
             <MapContainer
                 center={selectedPosition || initialPosition}
                 zoom={13}
