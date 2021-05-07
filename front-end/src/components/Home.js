@@ -1,19 +1,13 @@
 import React, {useEffect, useState} from "react";
 import "./Login.css"
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import HomeTile from "./HomeTile";
+import {addItemToSession} from "./frontFunctions";
 
-const Home =(props)=> {
+const Home =()=> {
 
     let history = useHistory();
     const [options, setOptions] = useState({isLogged:false});
-
-
-    const addItemToSession = (data) => {
-        let user = JSON.parse(sessionStorage.getItem('user'))
-        Object.assign(user,data)
-        sessionStorage.setItem('user', JSON.stringify(user))
-    }
 
     useEffect(()=>  {
         if(JSON.parse(sessionStorage.getItem('user'))) {
@@ -68,27 +62,27 @@ const Home =(props)=> {
 
 
     return (
-    <div>
-        <div className="hello">
-            {options.isLogged ? <h1 className="text-center">Witaj <b>{options.username}</b>!</h1>:""}
-            <h1 className="text-danger text-center">{options.error}</h1>
-        </div>
+        <div>
+            <div className="hello">
+                {options.isLogged ? <h1 className="text-center">Witaj <b>{options.username}</b>!</h1>:""}
+                <h1 className="text-danger text-center">{options.error}</h1>
+            </div>
 
-        <div className="row row-cols-1 row-cols-md-3 g-4 m-2">
-            {firstColumn.map(tile=>
-                <HomeTile href={tile.href} img={tile.img} inside={tile.inside}></HomeTile>
+            <div className="row row-cols-1 row-cols-md-3 g-4 m-2">
+                {firstColumn.map(tile=>
+                    <HomeTile href={tile.href} img={tile.img} inside={tile.inside}></HomeTile>
+                    )}
+
+            </div>
+
+            <div className="row row-cols-1 row-cols-md-3 g-4 m-2">
+                {secondColumn.map(tile=>
+                    <HomeTile href={tile.href} img={tile.img} inside={tile.inside}></HomeTile>
                 )}
 
+            </div>
         </div>
 
-        <div className="row row-cols-1 row-cols-md-3 g-4 m-2">
-            {secondColumn.map(tile=>
-                <HomeTile href={tile.href} img={tile.img} inside={tile.inside}></HomeTile>
-            )}
-
-        </div>
-    </div>
-
-)
+    )
 }
 export default Home

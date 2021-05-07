@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
-
 import "./Preferences.css"
-import axios from "axios";
+
 export default function CourtInfo(props) {
 
-    //const [currentPos,setCurrentPos]=useState(null)
     const [sport,setSport]=useState(props.event.sport.name)
     const [adress, setAdress]=useState({
         city:props.event.adress.city,
@@ -12,23 +10,6 @@ export default function CourtInfo(props) {
         house_number:props.event.adress.number
     })
 
-
-    const createCourt = () =>{
-        axios.post(`http://localhost:5000/addcourtfrommap/`,
-            {
-                city:adress.city,
-                street:adress.road,
-                number:adress.house_number,
-                sport,
-                cords:props.cords
-            },
-        ).then(response => {
-            console.log(response)
-        })
-            .catch(error => {
-                console.error('There was an error!', error);
-            });
-    }
 
     useEffect(()=>{
         console.log(props.event)
@@ -45,7 +26,7 @@ export default function CourtInfo(props) {
     return(
         <div className={!props.side ? "content":""}>
             <div className={!props.side ? "login-form":"court-form"}>
-                <form onSubmit={(e)=>{e.preventDefault();createCourt()}}>
+                <form >
                     <label >Miasto:<br/></label>
                     <input
                         className='form-control'
@@ -75,7 +56,6 @@ export default function CourtInfo(props) {
                         value={sport}
                         disabled={true}
                     />
-                    {!props.side && !props.button? <button className="btn btn-danger btn-lg m-3">Utwórz wydarzenie !</button>:null}
                 </form>
             </div>
         </div>

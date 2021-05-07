@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react';
-import { MapContainer, TileLayer, Marker, Popup,useMapEvents } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker} from 'react-leaflet'
 import "./Preferences.css"
 import { OpenStreetMapProvider } from "react-leaflet-geosearch";
 import SearchControl from "./SearchControl"
@@ -20,7 +20,6 @@ export default function AddEvent() {
         navigator.geolocation.getCurrentPosition(position => {
             const { latitude, longitude } = position.coords;
             setSelectedPosition([latitude, longitude]);
-
         });
         getEvents()
     }, []);
@@ -28,7 +27,6 @@ export default function AddEvent() {
     const getEvents = () =>{
         axios.get(`http://localhost:5000/courts/`,)
             .then(response => {
-            console.log(response)
             setCourts(response.data)
         })
             .catch(error => {
@@ -38,7 +36,6 @@ export default function AddEvent() {
 
     const onMarkerClick= (court)=>{
         setChosenCourt(court)
-
     }
 
     const renderMarkers = courts ?
@@ -50,10 +47,6 @@ export default function AddEvent() {
                     eventHandlers={{click: ()=>{onMarkerClick(court)}}}
                 />
                 ) : null
-
-
-
-
 
     const prov = OpenStreetMapProvider();
     return(
@@ -80,7 +73,6 @@ export default function AddEvent() {
                     attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-
             </MapContainer>
         </div>
     )

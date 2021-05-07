@@ -3,8 +3,9 @@ import "./Login.css"
 import { useHistory } from "react-router-dom";
 import EventRow from "./EventRow";
 import axios from "axios";
+import {addItemToSession,lvlNames} from "./frontFunctions";
 
-const MarkUsers =(props)=> {
+const MarkUsers =()=> {
 
     const [participants, setParticipants] = useState([]);
     const [message, setMessage] = useState('');
@@ -15,11 +16,6 @@ const MarkUsers =(props)=> {
     const [options, setOptions] = useState({isLogged:false});
     let history = useHistory();
 
-    const addItemToSession = (data) => {
-        let user = JSON.parse(sessionStorage.getItem('user'))
-        Object.assign(user,data)
-        sessionStorage.setItem('user', JSON.stringify(user))
-    }
 
     useEffect(()=>{
         setMessage("")
@@ -34,7 +30,6 @@ const MarkUsers =(props)=> {
                 history.push("/login")
             }
             setOptions(ops);
-            //dispatch(fetchMyEvents({userID:ops.userID}))
             getMyEvents(ops.userID)
         }
         else
@@ -64,7 +59,6 @@ const MarkUsers =(props)=> {
                 userid:options.userID
             },
         ).then(response => {
-            console.log(response)
             setParticipants(response.data.participants)
             setLevels(response.data.levels)
             setShowParticipants(true)
@@ -73,45 +67,15 @@ const MarkUsers =(props)=> {
                 console.error('There was an error!', error);
             });
     }
-    const lvlNames = (number)=>{
-        switch (number){
-            case 1:
-                return "Początkujący"
-                break;
-            case 2:
-                return "Amator"
-                break;
-            case 3:
-                return "Średnio-zaawansowany"
-                break;
-            case 4:
-                return "Zaawansowany"
-                break;
-            case 5:
-                return "Profesjonalista"
-                break;
-            default:
-                return "Początkujący"
-        }
-    }
-    const getCurrentMark = (userid)=>{
-        for (let i=0; i<myLevels.length; i++ ) {
-            if(myLevels[i].userid === userid){
-                return myLevels[i].mark;
-            }
-        }
-        return 1;
-    }
+
     const markParticipants =  () =>{
         if(myLevels.length>0) {
-            console.log(myLevels)
             axios.post(`http://localhost:5000/markparticipants/`,
                 {
                     marks: myLevels,
                     userid: options.userID
                 },
             ).then(response => {
-                console.log(response)
                 setMessage(response.data.msg)
             })
                 .catch(error => {
@@ -122,23 +86,6 @@ const MarkUsers =(props)=> {
             setMessage("Najpierw dokonaj oceny !")
         }
 
-    }
-    const markBegiiners  = async ()=>{
-        const marks = myLevels;
-        let isMarked = false;
-        for(let x=0; x<participants.length; x++){
-            for(let i=0;i<myLevels.length;i++){
-                if(participants[x].UserID === myLevels[i].userid) {
-                    isMarked = true;
-                    break;
-                }
-            }
-            if(!isMarked){
-                marks.unshift({userid:participants[x].UserID, rating:1})
-            }
-            isMarked=false;
-        }
-        setMyLevels(marks)
     }
 
     const addMark = (userid, rating)=>{

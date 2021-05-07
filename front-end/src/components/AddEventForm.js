@@ -1,14 +1,17 @@
 import React, {useEffect, useState} from 'react';
-
 import "./Preferences.css"
 import CourtInfo from "./CourtInfo";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import {addItemToSession} from "./frontFunctions";
+
+
 export default function AddEventForm(props) {
 
+    const [msg, setMsg] = useState("")
+    const [error, setError] = useState(false)
+    let history = useHistory();
     const [options, setOptions] = useState({isLogged:false});
-
-
     const [newEvent, setNewEvent]=useState({
         eventID: 0,
         name:"Nazwa wydarzenia",
@@ -16,16 +19,6 @@ export default function AddEventForm(props) {
         end:"Koniec wydarzenia",
         level:1
     })
-
-    const [msg, setMsg] = useState("")
-    const [error, setError] = useState(false)
-    let history = useHistory();
-
-    const addItemToSession = (data) => {
-        let user = JSON.parse(sessionStorage.getItem('user'))
-        Object.assign(user,data)
-        sessionStorage.setItem('user', JSON.stringify(user))
-    }
 
     useEffect(()=>  {
         if(JSON.parse(sessionStorage.getItem('user'))) {
@@ -41,7 +34,7 @@ export default function AddEventForm(props) {
     },[])
 
     const createNewEvent = () =>{
-        if( props.court.adress.city!="Miasto" ) {
+        if( props.court.adress.city!=="Miasto" ) {
             axios.post(`http://localhost:5000/createnewevent/`,
                 {
                     event: newEvent,
@@ -49,7 +42,6 @@ export default function AddEventForm(props) {
                     court: props.court
                 },
             ).then(response => {
-                console.log(response)
                 setMsg(response.data.msg)
                 setError(response.data.error)
 
@@ -64,9 +56,6 @@ export default function AddEventForm(props) {
 
         }
     }
-
-
-
 
     const info = (
         <div className=" ">
@@ -132,7 +121,6 @@ export default function AddEventForm(props) {
                     {info}
                     <button className="btn btn-danger btn-block mt-3" onClick={()=>{createNewEvent()}}>Dodaj wydarzenie</button>
                 </div>
-
             </div>
         </div>
     )

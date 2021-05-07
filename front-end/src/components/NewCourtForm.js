@@ -4,7 +4,6 @@ import "./Preferences.css"
 import axios from "axios";
 export default function NewCourtForm(props) {
 
-    //const [currentPos,setCurrentPos]=useState(null)
     const [miasto,setMiasto]=useState('')
     const [sport,setSport]=useState(1)
     const [adress, setAdress]=useState({
@@ -16,7 +15,6 @@ export default function NewCourtForm(props) {
     const getAdress = () =>{
         axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${props.cords[0]}&lon=${props.cords[1]}&format=json`
         ).then(response => {
-            console.log(response.data.address)
             setAdress(response.data.address)
             if(response.data.address.village){
                 setAdress({city:response.data.address.village})
@@ -42,7 +40,6 @@ export default function NewCourtForm(props) {
                 cords:props.cords
             },
         ).then(response => {
-            console.log(response)
             window.alert("Utworzono nowe boisko !")
         })
             .catch(error => {

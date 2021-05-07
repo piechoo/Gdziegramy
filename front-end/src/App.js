@@ -3,12 +3,9 @@ import {Link, Route, Switch, useHistory, withRouter, useLocation} from "react-ro
 
 import Index from "./components/Index";
 import Login from "./components/Login";
-import {useDispatch, useSelector} from "react-redux";
-import {logOut} from "./redux/slices/optionsSlice"
 import Home from "./components/Home";
 import AddUser from "./components/AddUser";
 import MarkUsers from "./components/MarkUsers";
-import MapWithSearch from "./components/MapWithSearch";
 import NewCourt from "./components/NewCourt";
 import CurrentEvents from "./components/CurrentEvents";
 import ShowCourts from "./components/ShowCourts";

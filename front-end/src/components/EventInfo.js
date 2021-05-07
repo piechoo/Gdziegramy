@@ -4,14 +4,11 @@ import "./Preferences.css"
 import axios from "axios";
 import CourtInfo from "./CourtInfo";
 import {useHistory} from "react-router-dom";
+import {addItemToSession,lvlNames} from "./frontFunctions";
+
 export default function EventInfo(props) {
 
     const [options, setOptions] = useState({isLogged:false});
-    const addItemToSession = (data) => {
-        let user = JSON.parse(sessionStorage.getItem('user'))
-        Object.assign(user,data)
-        sessionStorage.setItem('user', JSON.stringify(user))
-    }
     const [event, setEvent]=useState({eventID: 0,
         name:"Nazwa wydarzenia",
         startTime:"Start wydarzenia",
@@ -27,32 +24,7 @@ export default function EventInfo(props) {
     const [numberOfEvents, setNumberOfEvents] = useState(0)
     let history = useHistory();
 
-    const lvlNames = (number)=>{
-        switch (number){
-            case 1:
-                return "Początkujący"
-            break;
-                case 2:
-                return "Amator"
-            break;
-                case 3:
-                return "Średnio-zaawansowany"
-            break;
-                case 4:
-                return "Zaawansowany"
-            break;
-                case 5:
-                return "Profesjonalista"
-            break;
-            default:
-                return "Początkujący"
-        }
-    }
-
-
     useEffect(()=>{
-
-
         if(JSON.parse(sessionStorage.getItem('user'))) {
             const ops = JSON.parse(sessionStorage.getItem('user'))
             if(!ops.isLogged) {
@@ -118,7 +90,6 @@ export default function EventInfo(props) {
         // Use toUpperCase() to ignore character casing
         const dateA = a.startTime.toUpperCase();
         const dateB = b.startTime.toUpperCase();
-
         let comparison = 0;
         if (dateA > dateB) {
             comparison = 1;
@@ -132,14 +103,6 @@ export default function EventInfo(props) {
         getParticipants()
         setDetails(true)
     }
-    const handleIncrement = () => {
-        setActualEvent(prevCount => prevCount + 1);
-    };
-
-    //Create handleDecrement event handler
-    const handleDecrement = () => {
-        setActualEvent(prevCount => prevCount - 1);
-    };
 
     const nextEvent = () => {
         let newValue = actualEvent + 1;

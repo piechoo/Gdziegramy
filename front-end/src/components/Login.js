@@ -2,31 +2,13 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 import "./Login.css"
 import {Link, useHistory} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-//import {fetchLogIn,clearError} from "../redux/slices/optionsSlice";
 
-const Login =(props)=> {
-
+const Login =()=> {
 
     const [name, setName] = useState('');
-    const [userID, setUserID] = useState('');
-    const [error, setError] = useState('');
     const [password, setPassword] = useState('');
     const [options, setOptions] = useState({isLogged:false});
     let history = useHistory();
-    //const dispatch = useDispatch();
-    //const options = useSelector((state) => state.options);
-
-    const clearError = ()=>{
-        sessionStorage.setItem('error', "");
-    }
-
-
-    const addItemToSession = (data) => {
-        let user = JSON.parse(sessionStorage.getItem('user'))
-        Object.assign(user,data)
-        sessionStorage.setItem('user', JSON.stringify(user))
-    }
 
     useEffect(()=>  {
         if(JSON.parse(sessionStorage.getItem('user'))) {
@@ -42,7 +24,6 @@ const Login =(props)=> {
         console.log(options)
         if(options.isLogged)
             history.push("/home")
-
         axios.post(`http://localhost:5000/login/`,
             {
                 username:name,

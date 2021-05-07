@@ -2,28 +2,18 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 import "./Login.css"
 import {Link, useHistory} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {fetchLogIn, fetchAddUser, setError, clearError} from "../redux/slices/optionsSlice";
-import {handleFetchAddUser} from "../redux/sagas/handlers/options";
+import {addItemToSession} from "./frontFunctions";
+
 
 const AddUser =(props)=> {
 
-
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [userID, setUserID] = useState('');
     const [options, setOptions] = useState({isLogged:false});
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     let history = useHistory();
-    const dispatch = useDispatch();
 
-
-    const addItemToSession = (data) => {
-        let user = JSON.parse(sessionStorage.getItem('user'))
-        Object.assign(user,data)
-        sessionStorage.setItem('user', JSON.stringify(user))
-    }
 
     useEffect(()=>  {
         addItemToSession({error: ""})
@@ -37,7 +27,6 @@ const AddUser =(props)=> {
     },[])
 
     const addUser = () => {
-        //dispatch(fetchAddUser({name,password}))
         axios.post(`http://localhost:5000/adduser/`,
             {
                 username:name,
@@ -45,7 +34,6 @@ const AddUser =(props)=> {
                 password:password,
             },
         ).then(response => {
-            console.log(response)
             if(response.data.success){
                 addItemToSession({error:"Dodano użytkownika"})
                 history.push("/login")
@@ -58,26 +46,6 @@ const AddUser =(props)=> {
             .catch(error => {
                 console.error('There was an error!', error);
             });
-
-        /*
-        axios.post(`http://localhost:5000/login/`,
-            {
-                username:name,
-                password:password,
-            },
-        ).then(response => {
-            if(response.data.loggedin){
-                history.push("/home")
-            }
-            else {
-                console.log(response.data.error)
-                setError(response.data.error)
-            }
-        })
-            .catch(error => {
-                console.error('There was an error!', error);
-            });
-*/
     }
 
 

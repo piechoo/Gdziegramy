@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react';
-import { MapContainer, TileLayer, Marker, Popup,useMapEvents } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker,useMapEvents } from 'react-leaflet'
 import "./Preferences.css"
 import NewCourtForm from "./NewCourtForm";
 import { OpenStreetMapProvider } from "react-leaflet-geosearch";
@@ -7,7 +7,6 @@ import SearchControl from "./SearchControl"
 
 
 export default function NewCourt() {
-    const [initialPosition, setInitialPosition] = useState([50.06128, 19.93784]);
     const [selectedPosition, setSelectedPosition] = useState([50.06128, 19.93784]);
 
     useEffect(() => {
@@ -17,20 +16,15 @@ export default function NewCourt() {
         });
     }, []);
 
-
-
     const Markers = () => {
-
-        const map = useMapEvents({
+         useMapEvents({
             click(e) {
-                console.log(e)
                 setSelectedPosition([
                     e.latlng.lat,
                     e.latlng.lng
                 ]);
             },
         })
-
         return (
             selectedPosition ?
                 <Marker
@@ -40,7 +34,6 @@ export default function NewCourt() {
                 />
                 : null
         )
-
     }
 
 

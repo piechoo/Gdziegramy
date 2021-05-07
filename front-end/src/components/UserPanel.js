@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import "./Login.css"
-import {Link, useHistory} from "react-router-dom";
+import { useHistory} from "react-router-dom";
+import {addItemToSession} from "./frontFunctions";
 
 
-
-const UserPanel =(props)=> {
+const UserPanel =()=> {
 
     const [message, setMessage] = useState("Informacje o koncie");
     const [info, setInfo] = useState(true);
@@ -20,13 +20,6 @@ const UserPanel =(props)=> {
     const [newEmail, setNewEmail] = useState('');
     let history = useHistory();
 
-
-    const addItemToSession = (data) => {
-        let user = JSON.parse(sessionStorage.getItem('user'))
-        Object.assign(user,data)
-        sessionStorage.setItem('user', JSON.stringify(user))
-    }
-
     useEffect(()=>  {
         if(JSON.parse(sessionStorage.getItem('user'))) {
             const ops = JSON.parse(sessionStorage.getItem('user'))
@@ -38,8 +31,6 @@ const UserPanel =(props)=> {
         }
         else
             history.push("/login")
-        //if(!options.isLogged)
-            //
     },[])
 
     const showInfo= ()=>{
@@ -168,16 +159,12 @@ const UserPanel =(props)=> {
                 console.error('There was an error!', error);
             });
 
-
-
-
     }
 
 
-
     const informations = <div className="information">
-        <p>Nazwa uzytkownika: {options.username}</p>
-        <p>Poziom uzytkownika: ({options.level.level}){options.level.name}</p>
+        <p>Nazwa uzytkownika: <b>{options.username}</b></p>
+        <p>Poziom uzytkownika: <b>({options.level.level}) {options.level.name}</b></p>
     </div>
 
     const changePassword = <div className="information">

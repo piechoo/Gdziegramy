@@ -1,7 +1,6 @@
 import React,{useEffect, useState} from 'react';
-import { MapContainer, TileLayer, Marker, Popup,useMapEvents } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker } from 'react-leaflet'
 import "./Preferences.css"
-import NewCourtForm from "./NewCourtForm";
 import { OpenStreetMapProvider } from "react-leaflet-geosearch";
 import SearchControl from "./SearchControl"
 import axios from "axios";
@@ -27,11 +26,8 @@ export default function ShowCourts() {
     }, []);
 
     const getCourts = () =>{
-        axios.get(`http://localhost:5000/courts/`,)
+        axios.get(`http://localhost:5000/courts/`)
             .then(response => {
-            console.log(response)
-            //setParticipants(response.data.participants)
-            //setLevels(response.data.levels)
             setCourts(response.data)
         })
             .catch(error => {
@@ -40,9 +36,7 @@ export default function ShowCourts() {
     }
 
     const onMarkerClick= (court)=>{
-        console.log("ESSA")
         setChosenCourt(court)
-        console.log(chosenCourt)
     }
 
     const renderMarkers = courts ?
@@ -57,12 +51,10 @@ export default function ShowCourts() {
 
 
 
-
-
     const prov = OpenStreetMapProvider();
     return(
         <div className="mapWrapper">
-            <CourtInfo event={chosenCourt} button={true}></CourtInfo>
+            <CourtInfo event={chosenCourt}></CourtInfo>
             <MapContainer
                 center={selectedPosition || initialPosition}
                 zoom={13}

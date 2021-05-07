@@ -16,12 +16,12 @@ export default function CurrentEvents() {
         start:"Start wydarzenia",
         end:"Koniec wydarzenia",
         level:{levelName:"Poziom wydarzenia"}}]);
-    const [chosenEvent , setChosenEvent] = useState({
+    const chosenEvent ={
         eventID: 0,
         name:"Nazwa wydarzenia",
         start:"Start wydarzenia",
         end:"Koniec wydarzenia",
-        level:{levelName:"Poziom wydarzenia"}});
+        level:{levelName:"Poziom wydarzenia"}};
     const [chosenCourt , setChosenCourt] = useState({
         courtId:0,
         sport:{name:"Nazwa sportu"},

@@ -1,14 +1,11 @@
 import React, {useEffect, useState} from "react";
 import "./Login.css"
 import { useHistory } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {clearError, fetchLogIn, setError} from "../redux/slices/optionsSlice";
-import {fetchMyEvents} from "../redux/slices/eventsSlice";
-import HomeTile from "./HomeTile";
 import EventRow from "./EventRow";
 import axios from "axios";
+import {lvlNames, addItemToSession} from "./frontFunctions";
 
-const MyEvents =(props)=> {
+const MyEvents =()=> {
 
     const [participants, setParticipants] = useState([]);
     const [showParts, setShowParticipants] = useState(false);
@@ -16,14 +13,8 @@ const MyEvents =(props)=> {
     const [events, setEvents] = useState([]);
     const [currentEvent, setCurrentEvent] = useState(0);
     let history = useHistory();
-    const dispatch = useDispatch();
     const [options, setOptions] = useState({isLogged:false});
 
-    const addItemToSession = (data) => {
-        let user = JSON.parse(sessionStorage.getItem('user'))
-        Object.assign(user,data)
-        sessionStorage.setItem('user', JSON.stringify(user))
-    }
 
     useEffect(()=>  {
         if(JSON.parse(sessionStorage.getItem('user'))) {
@@ -33,7 +24,6 @@ const MyEvents =(props)=> {
                 history.push("/login")
             }
             setOptions(ops);
-            dispatch(fetchMyEvents({userID:options.userID}))
             getCreatedEvents(ops.userID)
         }
         else
@@ -41,27 +31,6 @@ const MyEvents =(props)=> {
 
     },[])
 
-    const lvlNames = (number)=>{
-        switch (number){
-            case 1:
-                return "Początkujący"
-                break;
-            case 2:
-                return "Amator"
-                break;
-            case 3:
-                return "Średnio-zaawansowany"
-                break;
-            case 4:
-                return "Zaawansowany"
-                break;
-            case 5:
-                return "Profesjonalista"
-                break;
-            default:
-                return "Początkujący"
-        }
-    }
     const getCreatedEvents = (userid) =>{
         axios.post(`http://localhost:5000/createdevents/`,
             {
@@ -79,7 +48,8 @@ const MyEvents =(props)=> {
     const getParticipants = (eventID) =>{
         axios.post(`http://localhost:5000/getmyeventsparticipants/`,
             {
-                event:eventID
+                event:eventID,
+                userid:options.userID
             },
         ).then(response => {
             console.log(response)
@@ -134,22 +104,26 @@ const MyEvents =(props)=> {
         )
     }
 
+    const renderEvents = ()=>{
+        return(<div className="log">
+            <h2 className="text-center">Wydarzenia w których uczestniczyłeś: </h2>
+            <table id="users">
+                <th> Nazwa wydarzenia</th>
+                <th> Adres</th>
+                <th> Czas rozpoczęcia</th>
+                <th> Sport</th>
+                <th> Więcej</th>
+                <tbody>
+                {events.map( ev => <EventRow key={ev.EventID} name={ev.name} court={ev.court} startTime={ev.startTime} sport={ev.sport} EventID={ev.EventID} handler={getParticipants} />)}
+                </tbody>
+            </table>
+
+        </div>)
+    }
+
     let rendering = showParts ?
         renderParticipants() :
-        <div className="log">
-            <h2 className="text-center">Wydarzenia w których uczestniczyłeś: </h2>
-                <table id="users">
-                    <th> Nazwa wydarzenia</th>
-                    <th> Adres</th>
-                    <th> Czas rozpoczęcia</th>
-                    <th> Sport</th>
-                    <th> Więcej</th>
-                    <tbody>
-                    {events.map( ev => <EventRow key={ev.EventID} name={ev.name} court={ev.court} startTime={ev.startTime} sport={ev.sport} EventID={ev.EventID} handler={getParticipants} />)}
-                    </tbody>
-                </table>
-
-        </div>
+        renderEvents()
 
 
 
