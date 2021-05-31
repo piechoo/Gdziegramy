@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Link, Route, Switch, useHistory, withRouter, useLocation} from "react-router-dom";
+import AuthService from './components/AuthService';
+import withAuth from './components/withAuth';
 
 import Index from "./components/Index";
 import Login from "./components/Login";
@@ -17,6 +19,8 @@ import "./App.css"
 import UserPanel from "./components/UserPanel";
 
 const App=()=> {
+    const Auth = new AuthService();
+
     const [options, setOptions] = useState({isLogged:false});
     const location = useLocation()
     let history = useHistory();
@@ -25,6 +29,7 @@ const App=()=> {
             setOptions(JSON.parse(sessionStorage.getItem('user')));
     },[location.pathname])
     const loginOut = () => {
+        Auth.logout()
         sessionStorage.setItem('user', JSON.stringify({
             isLogged:false,
             userID:"",
@@ -74,4 +79,4 @@ const App=()=> {
   );
 }
 
-export default withRouter(App);
+export default withRouter( App);

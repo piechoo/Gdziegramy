@@ -5,9 +5,11 @@ import { OpenStreetMapProvider } from "react-leaflet-geosearch";
 import SearchControl from "./SearchControl"
 import axios from "axios";
 import EventInfo from "./EventInfo";
+import AuthService from "./AuthService";
+import withAuth from "./withAuth";
 
 
-export default function CurrentEvents() {
+ function CurrentEvents() {
     const [initialPosition, setInitialPosition] = useState([50.06128, 19.93784]);
     const [selectedPosition, setSelectedPosition] = useState([50.06128, 19.93784]);
     const [events , setEvents] = useState([]);
@@ -27,6 +29,7 @@ export default function CurrentEvents() {
         sport:{name:"Nazwa sportu"},
         adress:{city:"Miasto",street:"Ulica",number:"Numer Ulicy"}
     });
+    const Auth = new AuthService()
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(position => {
@@ -38,7 +41,7 @@ export default function CurrentEvents() {
     }, []);
 
     const getEvents = () =>{
-        axios.get(`http://localhost:5000/currentevents/`)
+        Auth.fetchGet(`http://localhost:5000/currentevents/`)
             .then(response => {
             setEvents(response.data)
         })
@@ -47,12 +50,12 @@ export default function CurrentEvents() {
             });
     }
     const getSportEvents = (sport) =>{
-        axios.post(`http://localhost:5000/currentsportevents/`,
-            {
-                sport:sport
-            },
-        )
+
+        Auth.fetch(`http://localhost:5000/currentsportevents/`,{
+            sport:sport
+        })
             .then(response => {
+                console.log(response)
                 setEvents(response.data)
             })
             .catch(error => {
@@ -60,11 +63,10 @@ export default function CurrentEvents() {
             });
     }
     const getCourtEvents = (courtid) =>{
-        axios.post(`http://localhost:5000/eventsfromcourt/`,
-            {
-                courtid:courtid
-            },
-        ).then(response => {
+        Auth.fetch(`http://localhost:5000/eventsfromcourt/`,{
+            courtid:courtid
+        })
+            .then(response => {
                 console.log(response)
                 setCourtEvents(response.data)
             })
@@ -126,3 +128,5 @@ export default function CurrentEvents() {
         </div>
     )
 }
+
+export default withAuth(CurrentEvents)

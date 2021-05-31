@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import EventRow from "./EventRow";
 import axios from "axios";
 import {addItemToSession,lvlNames} from "./frontFunctions";
+import AuthService from "./AuthService";
+import withAuth from "./withAuth";
 
 const MarkUsers =()=> {
 
@@ -15,7 +17,7 @@ const MarkUsers =()=> {
     const [myLevels, setMyLevels] = useState([]);
     const [options, setOptions] = useState({isLogged:false});
     let history = useHistory();
-
+    const Auth = new AuthService()
 
     useEffect(()=>{
         setMessage("")
@@ -38,7 +40,7 @@ const MarkUsers =()=> {
     },[])
 
     const getMyEvents = (userid) =>{
-        axios.post(`http://localhost:5000/getmyevents/`,
+        Auth.fetch(`http://localhost:5000/getmyevents/`,
             {
                 userid:userid
             },
@@ -53,7 +55,7 @@ const MarkUsers =()=> {
     }
 
     const getParticipants = (eventID) =>{
-        axios.post(`http://localhost:5000/getmyeventsparticipants/`,
+        Auth.fetch(`http://localhost:5000/getmyeventsparticipants/`,
             {
                 event:eventID,
                 userid:options.userID
@@ -70,7 +72,7 @@ const MarkUsers =()=> {
 
     const markParticipants =  () =>{
         if(myLevels.length>0) {
-            axios.post(`http://localhost:5000/markparticipants/`,
+            Auth.fetch(`http://localhost:5000/markparticipants/`,
                 {
                     marks: myLevels,
                     userid: options.userID
@@ -108,7 +110,7 @@ const MarkUsers =()=> {
                 <h1 className="text-center">{message}</h1>
                 <table id="participants">
                     <th> Nazwa Użytkownika</th>
-                    <th> Obecna ocena</th>
+                    <th> Obecny poziom</th>
                     <th> Twoja ocena </th>
                     {participants.map( (part,index) =>
                         <tr>
@@ -146,7 +148,7 @@ const MarkUsers =()=> {
                     <th> Sport</th>
                     <th> Więcej</th>
                     <tbody>
-                    {events ? events.map( ev => <EventRow key={ev.EventID} name={ev.name} court={ev.court} startTime={ev.startTime} sport={ev.sport} EventID={ev.EventID} handler={getParticipants}/>):null}
+                    {events ? events.map( ev => <EventRow key={ev.EventID} name={ev.name} court={ev.court} startTime={(new Date(ev.startTime)).toLocaleString('pl-PL', { hour12: false })} sport={ev.sport} EventID={ev.EventID} handler={getParticipants}/>):null}
                     </tbody>
                 </table>
 
@@ -158,4 +160,4 @@ const MarkUsers =()=> {
         </div>
     )
 }
-export default MarkUsers
+export default withAuth(MarkUsers)

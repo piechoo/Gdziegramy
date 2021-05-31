@@ -10,7 +10,7 @@ const EventRow =(props)=> {
             <td>{props.startTime}</td>
             <td>{props.sport.name}</td>
             <td>
-                <button onClick={()=>props.handler(props.EventID)} className="btn btn-sm btn-danger" name="EventID" >Szczegóły
+                <button onClick={()=>props.handler(props.EventID)} className="btn btn-sm btn-danger" name="EventID" >Uczestnicy
                 </button>
             </td>
         </tr>

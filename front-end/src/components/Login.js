@@ -1,7 +1,8 @@
-import axios from "axios";
+
 import React, {useEffect, useState} from "react";
 import "./Login.css"
 import {Link, useHistory} from "react-router-dom";
+import AuthService from "./AuthService";
 
 const Login =()=> {
 
@@ -9,6 +10,7 @@ const Login =()=> {
     const [password, setPassword] = useState('');
     const [options, setOptions] = useState({isLogged:false});
     let history = useHistory();
+    const Auth = new AuthService();
 
     useEffect(()=>  {
         if(JSON.parse(sessionStorage.getItem('user'))) {
@@ -21,23 +23,14 @@ const Login =()=> {
     },[])
 
     const login = () => {
-        console.log(options)
-        if(options.isLogged)
-            history.push("/home")
-        axios.post(`http://localhost:5000/login/`,
-            {
-                username:name,
-                password:password,
-            },
-        ).then(response => {
-            console.log(response.data)
+        Auth.login(name,password)
+            .then(response => {
             const {isLogged,userID,username,error,level}=response.data
             if(isLogged){
                 sessionStorage.setItem('user', JSON.stringify({username,userID,isLogged,error,level}));
                 history.push("/home")
             }
             else {
-                console.log(response.data.error)
                 sessionStorage.setItem('user', JSON.stringify({username,userID,isLogged,error,level}));
                 setOptions(JSON.parse(sessionStorage.getItem('user')));
             }
@@ -45,11 +38,10 @@ const Login =()=> {
             .catch(error => {
                 console.error('There was an error!', error);
             });
-
     }
 
 
-    const canSave = Boolean(name)  && Boolean(password)
+    const canSave = Boolean(name) && Boolean(password)
     return (
         <div>
             <div className="head">
@@ -79,7 +71,7 @@ const Login =()=> {
                             />
                     </div>
                     <div className="form-group mb-3">
-                        <button type='button' className="btn btn-danger btn-block" disabled={!canSave} onClick={login}>Zaloguj</button>
+                        <button type='button' className="btn btn-danger btn-block" disabled={!canSave}  onClick={login}>Zaloguj</button>
                     </div>
                     <p className="text-center"><Link to="/adduser" className="text-danger">Utwórz nowe konto</Link></p>
                 </form>

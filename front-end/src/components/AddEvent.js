@@ -5,9 +5,11 @@ import { OpenStreetMapProvider } from "react-leaflet-geosearch";
 import SearchControl from "./SearchControl"
 import axios from "axios";
 import AddEventForm from "./AddEventForm";
+import AuthService from "./AuthService";
+import withAuth from "./withAuth";
 
 
-export default function AddEvent() {
+ function AddEvent() {
     const [initialPosition, setInitialPosition] = useState([50.06128, 19.93784]);
     const [selectedPosition, setSelectedPosition] = useState([50.06128, 19.93784]);
     const [courts , setCourts] = useState([]);
@@ -15,6 +17,7 @@ export default function AddEvent() {
         sport:{name:"Nazwa sportu"},
         adress:{city:"Miasto",street:"Ulica",number:"Numer Ulicy"}
     });
+     const Auth = new AuthService()
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(position => {
@@ -25,7 +28,8 @@ export default function AddEvent() {
     }, []);
 
     const getEvents = () =>{
-        axios.get(`http://localhost:5000/courts/`,)
+        //axios.get(`http://localhost:5000/courts/`,)
+        Auth.fetchGet(`http://localhost:5000/courts/`)
             .then(response => {
             setCourts(response.data)
         })
@@ -34,7 +38,8 @@ export default function AddEvent() {
             });
     }
     const getSportCourt = (sport) =>{
-        axios.post(`http://localhost:5000/sportcourts/`,
+        //axios.post(`http://localhost:5000/sportcourts/`,
+        Auth.fetch(`http://localhost:5000/sportcourts/`,
             {
                 sport:sport
             },
@@ -90,3 +95,5 @@ export default function AddEvent() {
         </div>
     )
 }
+
+export default withAuth(AddEvent)

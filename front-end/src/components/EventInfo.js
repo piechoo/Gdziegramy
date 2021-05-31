@@ -5,6 +5,7 @@ import axios from "axios";
 import CourtInfo from "./CourtInfo";
 import {useHistory} from "react-router-dom";
 import {addItemToSession,lvlNames} from "./frontFunctions";
+import AuthService from "./AuthService";
 
 export default function EventInfo(props) {
 
@@ -23,6 +24,9 @@ export default function EventInfo(props) {
     const [actualEvent, setActualEvent] = useState(0)
     const [numberOfEvents, setNumberOfEvents] = useState(0)
     let history = useHistory();
+    const Auth = new AuthService()
+
+    const dateOptions = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
 
     useEffect(()=>{
         if(JSON.parse(sessionStorage.getItem('user'))) {
@@ -37,6 +41,7 @@ export default function EventInfo(props) {
             setCourtEvents(actual)
             setNumberOfEvents(props.courtEvents.length)
             setEvent(props.courtEvents[0])
+            setActualEvent(0)
         }
         else
             history.push("/login")
@@ -44,7 +49,9 @@ export default function EventInfo(props) {
 
     const getParticipants = () =>{
         if( event.EventID !== 0) {
-            axios.post(`http://localhost:5000/getmyeventsparticipants/`,
+            console.log(event.EventID)
+            //axios.post(`http://localhost:5000/getmyeventsparticipants/`,
+            Auth.fetch(`http://localhost:5000/getthiseventsparticipants/`,
                 {
                     event: event.EventID
                 },
@@ -63,14 +70,14 @@ export default function EventInfo(props) {
 
     const becomeParticipant = () =>{
         if( event.EventID ) {
-            console.log(event.EventID)
-            axios.post(`http://localhost:5000/becomeparticipant/`,
+            //console.log(event.EventID)
+            //axios.post(`http://localhost:5000/becomeparticipant/`,
+            Auth.fetch(`http://localhost:5000/becomeparticipant/`,
                 {
                     event: event.EventID,
                     userID: options.userID
                 },
             ).then(response => {
-                console.log(response)
                 setMsg(response.data.msg)
                 setError(response.data.error)
 
@@ -82,7 +89,6 @@ export default function EventInfo(props) {
         else{
             setError(true)
             setMsg("Najpierw wybierz wydarzenie !")
-            console.log("siema")
         }
     }
 
@@ -131,14 +137,14 @@ export default function EventInfo(props) {
                     <input
                         className='form-control'
                         type="text"
-                        value={event.startTime}
+                        value={(new Date(event.startTime)).toLocaleString('pl-PL', { hour12: false })}
                         disabled={true}
                     />
                     <label >Koniec wydarzenia:<br/></label>
                     <input
                         className='form-control'
                         type="text"
-                        value={event.endTime}
+                        value={(new Date(event.endTime)).toLocaleString('pl-PL', { hour12: false })}
                         disabled={true}
                     />
 
@@ -160,7 +166,7 @@ export default function EventInfo(props) {
                     <th> Obecny poziom</th>
                     <tbody>
                     {parts.map( (part,index) =>
-                        <tr>
+                        <tr key={part.user.Name}>
                             <td>{part.user.Name} </td>
                             <td>{lvlNames(levels[index])} </td>
                         </tr>

@@ -3,6 +3,7 @@ import "./Login.css"
 import {useHistory} from "react-router-dom";
 import HomeTile from "./HomeTile";
 import {addItemToSession} from "./frontFunctions";
+import withAuth from './withAuth';
 
 const Home =()=> {
 
@@ -70,14 +71,14 @@ const Home =()=> {
 
             <div className="row row-cols-1 row-cols-md-3 g-4 m-2">
                 {firstColumn.map(tile=>
-                    <HomeTile href={tile.href} img={tile.img} inside={tile.inside}></HomeTile>
+                    <HomeTile key={tile.href} href={tile.href} img={tile.img} inside={tile.inside}></HomeTile>
                     )}
 
             </div>
 
             <div className="row row-cols-1 row-cols-md-3 g-4 m-2">
                 {secondColumn.map(tile=>
-                    <HomeTile href={tile.href} img={tile.img} inside={tile.inside}></HomeTile>
+                    <HomeTile key={tile.href} href={tile.href} img={tile.img} inside={tile.inside}></HomeTile>
                 )}
 
             </div>
@@ -85,4 +86,4 @@ const Home =()=> {
 
     )
 }
-export default Home
+export default withAuth(Home)

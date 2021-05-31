@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import "./Login.css"
 import {Link, useHistory} from "react-router-dom";
 import {addItemToSession} from "./frontFunctions";
+import AuthService from "./AuthService";
 
 
 const AddUser =(props)=> {
@@ -13,7 +14,7 @@ const AddUser =(props)=> {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     let history = useHistory();
-
+    const Auth = new AuthService()
 
     useEffect(()=>  {
         addItemToSession({error: ""})
@@ -27,7 +28,8 @@ const AddUser =(props)=> {
     },[])
 
     const addUser = () => {
-        axios.post(`http://localhost:5000/adduser/`,
+        //axios.post(`http://localhost:5000/adduser/`,
+        Auth.fetch(`http://localhost:5000/adduser/`,
             {
                 username:name,
                 email:email,

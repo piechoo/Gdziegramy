@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import "./Login.css"
 import { useHistory} from "react-router-dom";
 import {addItemToSession} from "./frontFunctions";
+import AuthService from "./AuthService";
 
 
 const UserPanel =()=> {
@@ -19,6 +20,8 @@ const UserPanel =()=> {
     const [newPassword2, setNewPassword2] = useState('');
     const [newEmail, setNewEmail] = useState('');
     let history = useHistory();
+    const Auth = new AuthService()
+
 
     useEffect(()=>  {
         if(JSON.parse(sessionStorage.getItem('user'))) {
@@ -63,7 +66,8 @@ const UserPanel =()=> {
     }
 
     const handleDestroy = () =>{
-        axios.post(`http://localhost:5000/destroyaccount/`,
+        //axios.post(`http://localhost:5000/destroyaccount/`,
+        Auth.fetch(`http://localhost:5000/destroyaccount/`,
             {
                 username:options.username,
                 userid:options.userID,
@@ -88,14 +92,16 @@ const UserPanel =()=> {
             addItemToSession({error: "Podane hasła nie są takie same!"})
             setError("Podane hasła nie są takie same!")
         } else {
-            axios.post(`http://localhost:5000/ispasswordcorrect/`,
+            //axios.post(`http://localhost:5000/ispasswordcorrect/`,
+            Auth.fetch(`http://localhost:5000/ispasswordcorrect/`,
                 {
                     password: actPassword,
                     userid: options.userID,
                 },
             ).then(response => {
                 if (response.data.success) {
-                    axios.post(`http://localhost:5000/changepassword/`,
+                    //axios.post(`http://localhost:5000/changepassword/`,
+                    Auth.fetch(`http://localhost:5000/changepassword/`,
                         {
                             password: newPassword,
                             userid: options.userID,
@@ -127,14 +133,16 @@ const UserPanel =()=> {
 
     const handleNewEmail = () => {
 
-        axios.post(`http://localhost:5000/ispasswordcorrect/`,
+        //axios.post(`http://localhost:5000/ispasswordcorrect/`,
+        Auth.fetch(`http://localhost:5000/ispasswordcorrect/`,
             {
                 password: actPassword,
                 userid: options.userID,
             },
         ).then(response => {
             if (response.data.success) {
-                axios.post(`http://localhost:5000/changeemail/`,
+                //axios.post(`http://localhost:5000/changeemail/`,
+                Auth.fetch(`http://localhost:5000/changeemail/`,
                     {
                         email: newEmail,
                         userid: options.userID,
@@ -216,7 +224,7 @@ const UserPanel =()=> {
             </div>
             <div className="form-group">
                 <input className='form-control'
-                       type="text"
+                       type="password"
                        name="password"
                        onChange={event => setActPassword(event.target.value )}
                        placeholder="Hasło "

@@ -5,6 +5,7 @@ import { OpenStreetMapProvider } from "react-leaflet-geosearch";
 import SearchControl from "./SearchControl"
 import axios from "axios";
 import CourtInfo from "./CourtInfo";
+import AuthService from "./AuthService";
 
 
 export default function ShowCourts() {
@@ -15,6 +16,8 @@ export default function ShowCourts() {
         sport:{name:"Nazwa sportu"},
         adress:{city:"Miasto",street:"Ulica",number:"Numer Ulicy"}
     });
+    const Auth = new AuthService()
+
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(position => {
@@ -26,7 +29,8 @@ export default function ShowCourts() {
     }, []);
 
     const getCourts = () =>{
-        axios.get(`http://localhost:5000/courts/`)
+        //axios.get(`http://localhost:5000/courts/`)
+        Auth.fetchGet(`http://localhost:5000/courts/`)
             .then(response => {
             setCourts(response.data)
         })
@@ -50,7 +54,8 @@ export default function ShowCourts() {
                 ) : null
 
     const getSportCourt = (sport) =>{
-        axios.post(`http://localhost:5000/sportcourts/`,
+        //axios.post(`http://localhost:5000/sportcourts/`,
+        Auth.fetch(`http://localhost:5000/sportcourts/`,
             {
                 sport:sport
             },

@@ -13,12 +13,17 @@ const {markEventUsers} = require("./functions");
 const {markUsers} = require("./functions");
 const {findMyCreatedEvents} = require("./functions");
 const {findParticipantsFromEvent} = require("./functions");
+const {findParticipantsFromMyEvent} = require("./functions");
 const {findEventByID} = require("./functions");
 const {findActualEvents} = require("./functions");
 const {calculateParticipantsLevels} = require("./functions");
 const {calculateUserLevel} = require("./functions");
 const {findActualEventsFromCourt} = require("./functions");
 const {doesEventCollide} = require("./functions");
+const jwt = require('jsonwebtoken');
+
+
+
 
 
 exports.AddEventFromMap = async (req, res) => {
@@ -141,9 +146,15 @@ exports.LogIn = async (req, res) => {
         });
         if (results.length > 0) {
             let usersLevel = await calculateUserLevel(results[0])
-            console.log(usersLevel)
+
+            let token = jwt.sign(
+                { username: username },
+                'where we play',
+                { expiresIn: 3600 }
+            ); // Sigining the token
             let data={
                 isLogged : true,
+                token,
                 userID : results[0].UserID,
                 username : username,
                 error: "",
@@ -155,6 +166,7 @@ exports.LogIn = async (req, res) => {
         } else {
             let data={
                 isLogged : false,
+                token:null,
                 userID : '',
                 username : '',
                 error: "Niepoprawny login lub hasło!"
@@ -162,11 +174,17 @@ exports.LogIn = async (req, res) => {
             res.send(data)
             res.end
         }
-        }
+    }
     else {
-        res.render("login",{
+        let data={
+            isLogged : false,
+            token:null,
+            userID : '',
+            username : '',
             error: "Podaj login i hasło!"
-        })
+        }
+        res.send(data)
+        res.end
     }
 }
 
@@ -273,7 +291,7 @@ exports.getMyEventsParticipants = async (req, res) => {
     let event = req.body.event;
     let userid = req.body.userid;
 
-    let parts = await findParticipantsFromEvent(event,userid)
+    let parts = await findParticipantsFromMyEvent(event,userid)
     let level = await calculateParticipantsLevels(parts)
     res.send(
         {
@@ -281,7 +299,18 @@ exports.getMyEventsParticipants = async (req, res) => {
             levels: level
         }
     )
+}
+exports.getThisEventsParticipants = async (req, res) => {
+    let event = req.body.event;
 
+    let parts = await findParticipantsFromEvent(event)
+    let level = await calculateParticipantsLevels(parts)
+    res.send(
+        {
+            participants: parts,
+            levels: level
+        }
+    )
 }
 
 

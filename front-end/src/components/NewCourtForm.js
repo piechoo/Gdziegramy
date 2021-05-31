@@ -2,19 +2,24 @@ import React, {useEffect, useState} from 'react';
 
 import "./Preferences.css"
 import axios from "axios";
+import AuthService from "./AuthService";
 export default function NewCourtForm(props) {
 
     const [miasto,setMiasto]=useState('')
+    const [msg,setMsg]=useState('')
+    const [error,setError]=useState(false)
     const [sport,setSport]=useState(1)
     const [adress, setAdress]=useState({
         city:'',
         road:'',
         house_number:''
     })
+    const Auth = new AuthService()
+
 
     const getAdress = () =>{
         axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${props.cords[0]}&lon=${props.cords[1]}&format=json`
-        ).then(response => {
+    ).then(response => {
             setAdress(response.data.address)
             if(response.data.address.village){
                 setAdress({city:response.data.address.village})
@@ -31,7 +36,7 @@ export default function NewCourtForm(props) {
 
 
     const createCourt = () =>{
-        axios.post(`http://localhost:5000/addcourtfrommap/`,
+        Auth.fetch(`http://localhost:5000/addcourtfrommap/`,
             {
                 city:adress.city,
                 street:adress.road,
@@ -40,7 +45,9 @@ export default function NewCourtForm(props) {
                 cords:props.cords
             },
         ).then(response => {
-            window.alert("Utworzono nowe boisko !")
+            setMsg(response.data.msg)
+            setError(response.data.error)
+
         })
             .catch(error => {
                 console.error('There was an error!', error);
@@ -48,12 +55,15 @@ export default function NewCourtForm(props) {
     }
 
     useEffect(()=>{
+        console.log(props.cords)
+        if(props.cords[0]!==0 && props.cords[1]!==0)
         getAdress()
     },[props.cords])
 
 
     return(
         <div className="content ">
+            <span className={error? "error msg":"msg"}>{msg}</span>
             <div className=" login-form">
                 <form onSubmit={(e)=>{e.preventDefault();createCourt()}}>
                     <label >Miasto:<br/></label>

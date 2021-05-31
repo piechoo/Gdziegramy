@@ -4,10 +4,13 @@ import CourtInfo from "./CourtInfo";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import {addItemToSession} from "./frontFunctions";
+import AuthService from "./AuthService";
+
 
 
 export default function AddEventForm(props) {
 
+    const Auth = new AuthService()
     const [msg, setMsg] = useState("")
     const [error, setError] = useState(false)
     let history = useHistory();
@@ -34,8 +37,8 @@ export default function AddEventForm(props) {
     },[])
 
     const createNewEvent = () =>{
-        if( props.court.adress.city!=="Miasto" ) {
-            axios.post(`http://localhost:5000/createnewevent/`,
+        if( props.court.adress.city!=="Miasto" && newEvent.start!=="Start wydarzenia" && newEvent.end!=="Koniec wydarzenia") {
+            Auth.fetch(`http://localhost:5000/createnewevent/`,
                 {
                     event: newEvent,
                     user: options.userID,
@@ -52,7 +55,7 @@ export default function AddEventForm(props) {
         }
         else{
             setError(true)
-            setMsg("Najpierw wybierz boisko !")
+            setMsg("Najpierw wprowadź poprawne dane !")
 
         }
     }

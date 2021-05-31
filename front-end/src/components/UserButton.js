@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useHistory } from "react-router-dom";
 
-const UserButton =(props)=> {
+const UserButton =()=> {
 
 
     const history = useHistory();
@@ -16,7 +16,9 @@ const UserButton =(props)=> {
         history.push(path);
     }
     return options.isLogged ? (
-            <button type="button" className="btn btn-link text-white" onClick={routeChange}>{options.username}<br /> {`(${options.level.level}) ${options.level.name}`}</button>
+            <button type="button" className="btn btn-link text-white"
+                    onClick={routeChange}>{options.username}<br /> {`(${options.level.level}) ${options.level.name}`}</button>
     ) : null
+
 }
 export default UserButton

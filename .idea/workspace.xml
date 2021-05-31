@@ -3,14 +3,41 @@
   <component name="ChangeListManager">
     <list default="true" id="1bcb4300-1071-4a82-aea2-a3272c61f371" name="Default Changelist" comment="Add becoming participant functionality">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front-end/src/components/AddEvent.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/AddEvent.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front-end/src/components/AddEventForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/AddEventForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/CourtInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/CourtInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/AddUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/AddUser.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front-end/src/components/CurrentEvents.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/CurrentEvents.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front-end/src/components/EventInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/EventInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/EventRow.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/EventRow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/MarkUsers.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/MarkUsers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/MyEvents.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/MyEvents.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/NewCourt.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/NewCourt.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/NewCourtForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/NewCourtForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/Preferences.css" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/Preferences.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front-end/src/components/ShowCourts.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/ShowCourts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/UserButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/UserButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/UserPanel.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/UserPanel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/redux/configureStore.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/redux/sagas/handlers/events.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/redux/sagas/handlers/options.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/redux/sagas/requests/events.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/redux/sagas/requests/options.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/redux/sagas/rootSaga.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/redux/slices/courtsSlice.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/redux/slices/eventsSlice.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/redux/slices/optionsSlice.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/redux/slices/participantsSlice.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/functions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/functions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +70,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="14.15.1" />
     <property name="javascript.nodejs.core.library.typings.version" value="14.14.17" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/front-end/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/front-end/public" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -52,11 +79,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\front-end\public" />
       <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\front-end\src" />
       <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\front-end\src\components" />
       <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\front-end\src\redux\slices" />
       <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\front-end\src\redux\sagas\requests" />
-      <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\front-end\src\redux\sagas\handlers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Piotr\WebstormProjects\nodemysql\src\public\images" />
@@ -132,6 +159,20 @@
       <workItem from="1620121953847" duration="6166000" />
       <workItem from="1620323592888" duration="4926000" />
       <workItem from="1620400568409" duration="3384000" />
+      <workItem from="1620576414995" duration="2055000" />
+      <workItem from="1620663648147" duration="1262000" />
+      <workItem from="1620742612841" duration="2967000" />
+      <workItem from="1620839935111" duration="2372000" />
+      <workItem from="1621011410951" duration="308000" />
+      <workItem from="1621272193516" duration="691000" />
+      <workItem from="1621349366423" duration="6457000" />
+      <workItem from="1621355910433" duration="21000" />
+      <workItem from="1621432178400" duration="3750000" />
+      <workItem from="1621519059353" duration="3505000" />
+      <workItem from="1621957811990" duration="788000" />
+      <workItem from="1622126265301" duration="1490000" />
+      <workItem from="1622212499468" duration="2803000" />
+      <workItem from="1622480167325" duration="1877000" />
     </task>
     <task id="LOCAL-00001" summary="Add adding new courts functionality">
       <created>1610999248415</created>

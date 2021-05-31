@@ -7,6 +7,7 @@ import SearchControl from "./SearchControl"
 
 
 export default function NewCourt() {
+
     const [selectedPosition, setSelectedPosition] = useState([50.06128, 19.93784]);
 
     useEffect(() => {

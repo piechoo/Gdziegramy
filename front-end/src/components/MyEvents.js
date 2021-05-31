@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import EventRow from "./EventRow";
 import axios from "axios";
 import {lvlNames, addItemToSession} from "./frontFunctions";
+import AuthService from "./AuthService";
 
 const MyEvents =()=> {
 
@@ -14,6 +15,7 @@ const MyEvents =()=> {
     const [currentEvent, setCurrentEvent] = useState(0);
     let history = useHistory();
     const [options, setOptions] = useState({isLogged:false});
+    const Auth = new AuthService()
 
 
     useEffect(()=>  {
@@ -32,7 +34,8 @@ const MyEvents =()=> {
     },[])
 
     const getCreatedEvents = (userid) =>{
-        axios.post(`http://localhost:5000/createdevents/`,
+        //axios.post(`http://localhost:5000/createdevents/`,
+        Auth.fetch(`http://localhost:5000/createdevents/`,
             {
                 usrID:userid
             },
@@ -46,13 +49,13 @@ const MyEvents =()=> {
             });
     }
     const getParticipants = (eventID) =>{
-        axios.post(`http://localhost:5000/getmyeventsparticipants/`,
+        //axios.post(`http://localhost:5000/getmyeventsparticipants/`,
+        Auth.fetch(`http://localhost:5000/getmyeventsparticipants/`,
             {
                 event:eventID,
                 userid:options.userID
             },
         ).then(response => {
-            console.log(response)
             setParticipants(response.data.participants)
             setLevels(response.data.levels)
             setShowParticipants(true)
@@ -64,8 +67,8 @@ const MyEvents =()=> {
     }
 
     const kickParticipant = (eventID,userID) =>{
-        console.log(userID)
-        axios.post(`http://localhost:5000/kickplayer/`,
+        //axios.post(`http://localhost:5000/kickplayer/`,
+        Auth.fetch(`http://localhost:5000/kickplayer/`,
             {
                 event:eventID,
                 user:userID
@@ -106,7 +109,7 @@ const MyEvents =()=> {
 
     const renderEvents = ()=>{
         return(<div className="log">
-            <h2 className="text-center">Wydarzenia w których uczestniczyłeś: </h2>
+            <h2 className="text-center">Utworzone przez Ciebie wydarzenia: </h2>
             <table id="users">
                 <th> Nazwa wydarzenia</th>
                 <th> Adres</th>
@@ -114,7 +117,7 @@ const MyEvents =()=> {
                 <th> Sport</th>
                 <th> Więcej</th>
                 <tbody>
-                {events.map( ev => <EventRow key={ev.EventID} name={ev.name} court={ev.court} startTime={ev.startTime} sport={ev.sport} EventID={ev.EventID} handler={getParticipants} />)}
+                {events.map( ev => <EventRow key={ev.EventID} name={ev.name} court={ev.court} startTime={(new Date(ev.startTime)).toLocaleString('pl-PL', { hour12: false })} sport={ev.sport} EventID={ev.EventID} handler={getParticipants} />)}
                 </tbody>
             </table>
 

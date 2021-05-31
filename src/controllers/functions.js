@@ -200,7 +200,7 @@ exports.findEventByID = async (eventId) =>{
     return ev
 }
 
-exports.findParticipantsFromEvent = async (eventId,userid) =>{
+exports.findParticipantsFromMyEvent = async (eventId,userid) =>{
     let parts = Participant.findAll({
         where: {
             EventID: eventId
@@ -211,6 +211,19 @@ exports.findParticipantsFromEvent = async (eventId,userid) =>{
                 where: {
                     UserID: {[Op.ne]: userid},
                 }
+            },
+        ]
+    })
+    return parts
+}
+exports.findParticipantsFromEvent = async (eventId) =>{
+    let parts = Participant.findAll({
+        where: {
+            EventID: eventId
+        },
+        include:[
+            {
+                model: User,
             },
         ]
     })
